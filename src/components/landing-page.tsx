@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
+import { WandersphereLogo } from './wandersphere-logo';
 
 interface LandingPageProps {
   onEnter: () => void;
@@ -26,10 +27,14 @@ export function LandingPage({ onEnter }: LandingPageProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <h1 className="text-6xl md:text-7xl mb-6 tracking-tight">
-            Wandersphere
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-300 mb-12 italic">
+          {/* Logo with Text */}
+          <div className="flex flex-col items-center gap-3 mb-5">
+            <WandersphereLogo className="w-20 h-20 md:w-24 md:h-24" />
+            <h1 className="text-4xl md:text-6xl tracking-tight">
+              Wandersphere
+            </h1>
+          </div>
+          <p className="text-lg md:text-xl text-slate-300 mb-12 italic">
             Not tourism. Not sightseeing. But presence.
           </p>
         </motion.div>

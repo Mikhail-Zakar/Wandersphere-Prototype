@@ -19,7 +19,7 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
   });
   const [quietMode, setQuietMode] = useState(initialQuietMode);
   const [showInfo, setShowInfo] = useState(!initialQuietMode);
-  const [audioEnabled, setAudioEnabled] = useState(false); // Start with audio OFF so user must click to enable
+  const [audioEnabled, setAudioEnabled] = useState(true); // Start with audio ON by default for immersion
   const [showAylaInsight, setShowAylaInsight] = useState(false);
 
   const handleSave = () => {
@@ -53,13 +53,13 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
           setQuietMode(!quietMode);
           setShowInfo(quietMode); // Show info when exiting quiet mode
         }}
-        className="fixed top-6 right-6 z-[60] p-3 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 hover:bg-slate-800/90 text-white transition-all duration-200 shadow-lg hover:shadow-xl"
+        className="fixed top-4 right-4 md:top-6 md:right-6 z-[60] p-2 md:p-3 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 hover:bg-slate-800/90 text-white transition-all duration-200 shadow-lg hover:shadow-xl"
         title={quietMode ? "Exit Quiet Mode" : "Enter Quiet Mode"}
       >
         {quietMode ? (
-          <Sun className="w-5 h-5" />
+          <Sun className="w-4 h-4 md:w-5 md:h-5" />
         ) : (
-          <Moon className="w-5 h-5" />
+          <Moon className="w-4 h-4 md:w-5 md:h-5" />
         )}
       </motion.button>
 
@@ -92,15 +92,15 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -100, opacity: 0 }}
-              className="p-6 pr-20 flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent z-40"
+              className="p-4 md:p-6 pr-16 md:pr-20 flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent z-40"
             >
               <Button
                 onClick={onBack}
                 variant="ghost"
                 size="sm"
-                className="text-white hover:bg-white/10"
+                className="text-white hover:bg-white/10 text-xs md:text-sm"
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
+                <ArrowLeft className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                 Back
               </Button>
 
@@ -118,12 +118,12 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
                   onClick={handleSave}
                   variant="ghost"
                   size="sm"
-                  className="text-white hover:bg-white/10"
+                  className="text-white hover:bg-white/10 p-2"
                 >
                   {isSaved ? (
-                    <BookmarkCheck className="w-4 h-4 fill-white" />
+                    <BookmarkCheck className="w-3 h-3 md:w-4 md:h-4 fill-white" />
                   ) : (
-                    <Bookmark className="w-4 h-4" />
+                    <Bookmark className="w-3 h-3 md:w-4 md:h-4" />
                   )}
                 </Button>
 
@@ -132,9 +132,9 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
                     onClick={() => setShowInfo(!showInfo)}
                     variant="ghost"
                     size="sm"
-                    className="text-white hover:bg-white/10"
+                    className="text-white hover:bg-white/10 p-2"
                   >
-                    <Info className="w-4 h-4" />
+                    <Info className="w-3 h-3 md:w-4 md:h-4" />
                   </Button>
                 )}
               </div>
@@ -143,16 +143,16 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
         </AnimatePresence>
 
         {/* Center Content */}
-        <div className="flex-1 flex items-center justify-center p-6">
+        <div className="flex-1 flex items-center justify-center p-4 md:p-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl text-center"
+            className="max-w-3xl w-full text-center"
           >
             {/* Simulated 360 viewer placeholder */}
-            <div className="mb-8 p-12 border-2 border-white/20 border-dashed rounded-2xl bg-black/40 backdrop-blur-sm">
-              <div className="text-6xl mb-4">🌍</div>
-              <p className="text-sm text-slate-300 mb-2">360° Immersive View</p>
+            <div className="mb-6 md:mb-8 p-8 md:p-12 border-2 border-white/20 border-dashed rounded-2xl bg-black/40 backdrop-blur-sm">
+              <div className="text-4xl md:text-6xl mb-3 md:mb-4">🌍</div>
+              <p className="text-xs md:text-sm text-slate-300 mb-1 md:mb-2">360° Immersive View</p>
               <p className="text-xs text-slate-400">
                 Drag to explore • Scroll to zoom
               </p>
@@ -165,18 +165,18 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                 >
-                  <h1 className="text-4xl md:text-5xl mb-4">
+                  <h1 className="text-2xl md:text-4xl lg:text-5xl mb-3 md:mb-4">
                     {experience.title}
                   </h1>
-                  <p className="text-xl text-slate-300 mb-2">
+                  <p className="text-base md:text-xl text-slate-300 mb-2">
                     {experience.location}, {experience.country}
                   </p>
-                  <p className="text-lg text-slate-400 italic mb-6">
+                  <p className="text-sm md:text-lg text-slate-400 italic mb-4 md:mb-6 px-4">
                     "{experience.description}"
                   </p>
 
                   {experience.timeOfDay && (
-                    <p className="text-sm text-slate-400 mb-8">
+                    <p className="text-xs md:text-sm text-slate-400 mb-6 md:mb-8">
                       It's {experience.timeOfDay} in {experience.location} — {
                         experience.timeOfDay.includes('AM') 
                           ? 'the day is just beginning' 

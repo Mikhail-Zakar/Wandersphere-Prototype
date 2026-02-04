@@ -21,6 +21,7 @@ export function AudioPlayer({
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // Create audio element with better settings
@@ -31,12 +32,24 @@ export function AudioPlayer({
     audio.volume = volume;
     
     // Set up event listeners before setting src
+    audio.addEventListener('loadstart', () => {
+      setIsLoading(true);
+      console.log('Audio loading started');
+    });
+
+    audio.addEventListener('canplay', () => {
+      setIsLoading(false);
+      console.log('Audio can play');
+    });
+    
     audio.addEventListener('canplaythrough', () => {
+      setIsLoading(false);
       console.log('Audio ready to play');
     });
     
     audio.addEventListener('playing', () => {
       setIsPlaying(true);
+      setIsLoading(false);
       setError(false);
       console.log('Audio playing');
     });
@@ -50,6 +63,7 @@ export function AudioPlayer({
       console.error('Audio error:', e);
       setError(true);
       setIsPlaying(false);
+      setIsLoading(false);
     });
     
     // Now set the source
@@ -59,6 +73,8 @@ export function AudioPlayer({
     // Cleanup
     return () => {
       audio.pause();
+      audio.removeEventListener('loadstart', () => {});
+      audio.removeEventListener('canplay', () => {});
       audio.removeEventListener('canplaythrough', () => {});
       audio.removeEventListener('playing', () => {});
       audio.removeEventListener('pause', () => {});
@@ -74,6 +90,7 @@ export function AudioPlayer({
     const playAudio = async () => {
       if (isEnabled) {
         try {
+          setIsLoading(true);
           audio.currentTime = 0;
           await audio.play();
           console.log('Audio playback started successfully');
@@ -81,10 +98,12 @@ export function AudioPlayer({
           console.error('Audio playback failed:', error);
           setError(true);
           setIsPlaying(false);
+          setIsLoading(false);
         }
       } else {
         audio.pause();
         setIsPlaying(false);
+        setIsLoading(false);
       }
     };
 
@@ -115,7 +134,7 @@ export function AudioPlayer({
           <Volume2 className="w-4 h-4 text-green-400 animate-pulse" />
           <span className="text-xs text-slate-300 font-medium">Audio On</span>
         </>
-      ) : isEnabled && !isPlaying ? (
+      ) : isEnabled && isLoading ? (
         <>
           <Volume2 className="w-4 h-4 text-yellow-400" />
           <span className="text-xs text-yellow-300 font-medium">Loading...</span>

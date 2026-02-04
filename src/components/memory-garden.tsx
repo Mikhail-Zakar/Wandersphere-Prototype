@@ -35,21 +35,21 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
   };
 
   return (
-    <div className={`min-h-screen ${quietMode ? 'pt-0' : 'pt-24'} pb-12`}>
-      <div className="max-w-7xl mx-auto px-6">
+    <div className={`min-h-screen ${quietMode ? 'pt-0' : 'pt-20 md:pt-24'} pb-12 px-4 md:px-6`}>
+      <div className="max-w-7xl mx-auto">
         {!quietMode && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8"
+            className="mb-6 md:mb-8"
           >
-            <div className="flex items-center gap-3 mb-3">
-              <Flower2 className="w-8 h-8 text-purple-400" />
-              <h2 className="text-3xl text-white">
+            <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+              <Flower2 className="w-6 h-6 md:w-8 md:h-8 text-purple-400" />
+              <h2 className="text-2xl md:text-3xl text-white">
                 Memory Garden
               </h2>
             </div>
-            <p className="text-slate-400 max-w-2xl">
+            <p className="text-sm md:text-base text-slate-400 max-w-2xl">
               Your personal collection of moments that moved you. 
               A quiet space to revisit the places that touched your heart.
             </p>
@@ -60,21 +60,21 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-center py-20"
+            className="text-center py-12 md:py-20 px-4"
           >
             <div className="max-w-md mx-auto">
-              <Flower2 className="w-16 h-16 text-slate-700 mx-auto mb-4" />
-              <h3 className="text-xl text-white mb-3">
+              <Flower2 className="w-12 h-12 md:w-16 md:h-16 text-slate-700 mx-auto mb-3 md:mb-4" />
+              <h3 className="text-lg md:text-xl text-white mb-2 md:mb-3">
                 Your garden is empty
               </h3>
-              <p className="text-slate-400 leading-relaxed">
+              <p className="text-sm md:text-base text-slate-400 leading-relaxed">
                 As you explore, save the moments that resonate with you. 
                 They'll bloom here, ready for you to revisit whenever you need them.
               </p>
             </div>
           </motion.div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {savedExperiences.map((experience, index) => (
               <motion.div
                 key={experience.id}

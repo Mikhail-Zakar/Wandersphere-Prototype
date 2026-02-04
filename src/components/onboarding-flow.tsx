@@ -36,26 +36,26 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-center p-4 md:p-6">
       <div className="max-w-5xl w-full">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="text-center mb-8 md:mb-12"
         >
-          <div className="inline-flex items-center gap-2 mb-6">
-            <Sparkles className="w-5 h-5 text-purple-400" />
-            <span className="text-sm tracking-wide text-purple-300">AYLA</span>
+          <div className="inline-flex items-center gap-2 mb-4 md:mb-6">
+            <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
+            <span className="text-xs md:text-sm tracking-wide text-purple-300">AYLA</span>
           </div>
-          <h2 className="text-3xl md:text-4xl mb-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl mb-3 md:mb-4 px-4">
             How would you like to begin?
           </h2>
-          <p className="text-slate-300 text-lg">
+          <p className="text-slate-300 text-base md:text-lg px-4">
             Choose your path, and I'll guide you there
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
           {choices.map((choice, index) => {
             const Icon = choice.icon;
             const isSelected = selectedChoice === choice.id;
@@ -68,7 +68,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                 transition={{ delay: index * 0.1 }}
                 onClick={() => setSelectedChoice(choice.id)}
                 className={`
-                  relative p-8 rounded-2xl border-2 transition-all duration-300 text-left
+                  relative p-6 md:p-8 rounded-2xl border-2 transition-all duration-300 text-left
                   ${isSelected 
                     ? 'border-white/40 bg-white/10' 
                     : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10'
@@ -78,11 +78,13 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${choice.gradient} opacity-0 transition-opacity duration-300 ${isSelected ? 'opacity-100' : ''}`} />
                 
                 <div className="relative z-10">
-                  <Icon className={`w-10 h-10 mb-4 transition-colors ${isSelected ? 'text-white' : 'text-slate-400'}`} />
-                  <h3 className="text-xl mb-3">
+                  <div className="mb-3 md:mb-4">
+                    <Icon className="w-8 h-8 md:w-10 md:h-10" />
+                  </div>
+                  <h3 className="text-lg md:text-xl mb-2">
                     {choice.title}
                   </h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
+                  <p className="text-slate-300 text-sm md:text-base leading-relaxed">
                     {choice.description}
                   </p>
                 </div>
