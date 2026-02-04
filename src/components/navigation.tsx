@@ -65,6 +65,16 @@ export function Navigation({
               <div className="flex items-center justify-between">
                 {/* Logo */}
                 <div className="flex items-center gap-4 md:gap-8">
+                  {/* Mobile Menu Button - Shown on left for mobile */}
+                  <Button
+                    onClick={() => setMobileMenuOpen(true)}
+                    variant="ghost"
+                    size="sm"
+                    className="md:hidden text-white hover:bg-white/10 -ml-2"
+                  >
+                    <Menu className="w-5 h-5" />
+                  </Button>
+
                   <WandersphereLogo className="w-8 h-8 md:w-10 md:h-10" />
 
                   {/* Desktop Nav Items */}
@@ -95,16 +105,6 @@ export function Navigation({
 
                 {/* Right side actions */}
                 <div className="flex items-center gap-2 md:gap-4 pr-12 md:pr-14">
-                  {/* Mobile Menu Button */}
-                  <Button
-                    onClick={() => setMobileMenuOpen(true)}
-                    variant="ghost"
-                    size="sm"
-                    className="md:hidden text-white hover:bg-white/10"
-                  >
-                    <Menu className="w-5 h-5" />
-                  </Button>
-
                   {/* Ayla Button - Hidden on mobile, shown in sidebar instead */}
                   <Button
                     onClick={onAylaClick}

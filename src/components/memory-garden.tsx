@@ -35,7 +35,7 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
   };
 
   return (
-    <div className={`min-h-screen ${quietMode ? 'pt-0' : 'pt-20 md:pt-24'} pb-12 px-4 md:px-6`}>
+    <div className={`min-h-screen ${quietMode ? 'pt-16 md:pt-20' : 'pt-20 md:pt-24'} pb-12 px-4 md:px-6`}>
       <div className="max-w-7xl mx-auto">
         {!quietMode && (
           <motion.div

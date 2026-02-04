@@ -13,7 +13,7 @@ export function SharePresencePage({ quietMode }: SharePresencePageProps) {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white ${quietMode ? 'pt-0' : 'pt-20 md:pt-24'} px-4 md:px-6`}>
+    <div className={`min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white ${quietMode ? 'pt-16 md:pt-20' : 'pt-20 md:pt-24'} px-4 md:px-6`}>
       <div className="max-w-4xl mx-auto py-12 md:py-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
