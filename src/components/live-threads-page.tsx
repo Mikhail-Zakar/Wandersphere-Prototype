@@ -11,7 +11,7 @@ interface LiveThreadsPageProps {
 
 export function LiveThreadsPage({ onThreadSelect, quietMode }: LiveThreadsPageProps) {
   return (
-    <div className={`min-h-screen ${quietMode ? 'pt-0' : 'pt-20 md:pt-24'} pb-12 px-4 md:px-6`}>
+    <div className={`min-h-screen ${quietMode ? 'pt-16 md:pt-20' : 'pt-20 md:pt-24'} pb-12 px-4 md:px-6`}>
       <div className="max-w-7xl mx-auto">
         {!quietMode && (
           <motion.div
@@ -43,7 +43,7 @@ export function LiveThreadsPage({ onThreadSelect, quietMode }: LiveThreadsPagePr
               >
                 <div className="flex flex-col md:flex-row">
                   {/* Image */}
-                  <div className="relative md:w-2/5 aspect-[16/10] md:aspect-auto overflow-hidden">
+                  <div className="relative md:w-2/5 aspect-[16/10] md:aspect-[4/3] overflow-hidden">
                     <img
                       src={thread.imageUrl}
                       alt={thread.title}

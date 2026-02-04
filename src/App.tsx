@@ -12,6 +12,9 @@ export default function App() {
   const [onboardingChoice, setOnboardingChoice] = useState<OnboardingChoice>(null);
 
   useEffect(() => {
+    // Set document title
+    document.title = 'Wandersphere Prototype';
+    
     // Check if user has visited before
     const visited = localStorage.getItem('wandersphere_visited');
     const onboarded = localStorage.getItem('wandersphere_onboarded');

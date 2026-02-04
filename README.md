@@ -1,7 +1,7 @@
 
-  # Immersive Virtual Experience Platform
+  # Wandersphere Prototype
 
-  This is a code bundle for Immersive Virtual Experience Platform. The original project is available at https://www.figma.com/design/gzqf2n6feacMTTrCEU1gMO/Immersive-Virtual-Experience-Platform.
+  This is a code bundle for Wandersphere Prototype. The original project is available at https://www.figma.com/design/gzqf2n6feacMTTrCEU1gMO/Wandersphere-Prototype.
 
   ## Running the code
 
