@@ -13,136 +13,117 @@ export function SharePresencePage({ quietMode }: SharePresencePageProps) {
   };
 
   return (
-    <div className={`min-h-screen relative ${quietMode ? 'pt-16 md:pt-20' : 'pt-20 md:pt-24'} pb-12 px-4 md:px-6`}>
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-slate-950 to-pink-900/20 pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-purple-600/10 via-transparent to-transparent pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Hero Section */}
-        {!quietMode && (
+    <div className={`min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white ${quietMode ? 'pt-16 md:pt-20' : 'pt-20 md:pt-24'} px-4 md:px-6`}>
+      <div className="max-w-4xl mx-auto py-12 md:py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12 md:mb-16"
+        >
+          {/* Icon */}
           <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 mb-6 md:mb-8"
+          >
+            <Heart className="w-8 h-8 md:w-10 md:h-10 text-purple-400" />
+          </motion.div>
+
+          {/* Heading */}
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-8 md:mb-12 text-center"
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6 tracking-tight px-4"
           >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Heart className="w-8 h-8 md:w-10 md:h-10 text-purple-400" />
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white">
-                Share Your Presence
-              </h2>
-            </div>
-            <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto">
-              Help us shape the future of virtual presence
-            </p>
-          </motion.div>
-        )}
+            Share Your Presence
+          </motion.h1>
 
-        {quietMode && (
-          <motion.div
+          {/* Subheading */}
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8 md:mb-12 text-center"
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed px-4"
           >
-            <p className="text-xl md:text-2xl text-slate-300 font-light italic">
-              "Help us shape the future of virtual presence"
-            </p>
-          </motion.div>
-        )}
+            Help us shape the future of virtual presence
+          </motion.p>
+        </motion.div>
 
-        {/* Main Content Card */}
+        {/* Main Content */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.6 }}
-          className="bg-gradient-to-br from-slate-900/80 via-slate-900/50 to-purple-900/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 lg:p-16 mb-8 md:mb-12 shadow-2xl"
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-white/10 rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-12 mb-8 md:mb-12"
         >
-          <div className="space-y-8 mb-10 md:mb-12">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="flex items-start gap-4 md:gap-5"
-            >
-              <div className="flex-shrink-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 p-3 md:p-4 rounded-xl backdrop-blur-sm">
-                <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-purple-300" />
+          <div className="space-y-5 md:space-y-6 mb-8 md:mb-10">
+            <div className="flex items-start gap-3 md:gap-4">
+              <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-purple-500/20 flex items-center justify-center mt-1">
+                <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-purple-400" />
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl mb-2 md:mb-3 text-white font-light">Your Voice Matters</h3>
+                <h3 className="text-base md:text-lg mb-1 md:mb-2 text-white">Your Voice Matters</h3>
                 <p className="text-sm md:text-base text-slate-300 leading-relaxed">
                   We're building something different — an experience that transcends traditional virtual tourism. 
                   Your insights will help us create deeper, more authentic connections between people and places.
                 </p>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="flex items-start gap-4 md:gap-5"
-            >
-              <div className="flex-shrink-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 p-3 md:p-4 rounded-xl backdrop-blur-sm">
-                <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-purple-300" />
+            <div className="flex items-start gap-3 md:gap-4">
+              <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-purple-500/20 flex items-center justify-center mt-1">
+                <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-purple-400" />
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl mb-2 md:mb-3 text-white font-light">What We're Asking</h3>
+                <h3 className="text-base md:text-lg mb-1 md:mb-2 text-white">What We're Asking</h3>
                 <p className="text-sm md:text-base text-slate-300 leading-relaxed">
                   Share your thoughts on immersive experiences, the moments that move you, and what "presence" 
                   means to you. Your feedback shapes how we design for genuine human connection.
                 </p>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="flex items-start gap-4 md:gap-5"
-            >
-              <div className="flex-shrink-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 p-3 md:p-4 rounded-xl backdrop-blur-sm">
-                <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-purple-300" />
+            <div className="flex items-start gap-3 md:gap-4">
+              <div className="flex-shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-purple-500/20 flex items-center justify-center mt-1">
+                <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-purple-400" />
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl mb-2 md:mb-3 text-white font-light">A Quiet Approach</h3>
+                <h3 className="text-base md:text-lg mb-1 md:mb-2 text-white">A Quiet Approach</h3>
                 <p className="text-sm md:text-base text-slate-300 leading-relaxed">
                   Just like Wandersphere itself, this survey focuses on meaningful reflection rather than 
                   quick clicks. Take your time. Be thoughtful. Your genuine response is what matters.
                 </p>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.5 }}
-            className="text-center"
-          >
+          <div className="text-center">
             <Button
               onClick={handleOpenForm}
               size="lg"
-              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white border-0 px-10 md:px-12 py-6 md:py-7 text-lg md:text-xl rounded-2xl shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 md:px-8 py-5 md:py-6 text-base md:text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
             >
               <span className="mr-2">Open Survey</span>
-              <ExternalLink className="w-5 h-5 md:w-6 md:h-6 inline" />
+              <ExternalLink className="w-4 h-4 md:w-5 md:h-5 inline" />
             </Button>
-            <p className="text-sm text-slate-400 mt-4 md:mt-5">
+            <p className="text-xs text-slate-500 mt-3 md:mt-4">
               Opens in a new window • Takes about 5-10 minutes
             </p>
-          </motion.div>
+          </div>
         </motion.div>
 
         {/* Footer Note */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="text-center text-sm md:text-base text-slate-400 space-y-3 px-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          className="text-center text-xs md:text-sm text-slate-400 space-y-2 px-4"
         >
-          <p className="italic text-slate-300">
+          <p className="italic">
             "Every voice adds depth to the experience we're creating together."
           </p>
           <p className="text-slate-500">
