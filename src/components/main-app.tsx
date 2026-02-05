@@ -5,6 +5,7 @@ import { ExplorePage } from './explore-page';
 import { LiveThreadsPage } from './live-threads-page';
 import { MemoryGarden } from './memory-garden';
 import { SharePresencePage } from './share-presence-page';
+import { OurPromisePage } from './our-promise-page';
 import { ExperienceViewer } from './experience-viewer';
 import { LiveThreadViewer } from './live-thread-viewer';
 import { AylaGuide } from './ayla-guide';
@@ -14,7 +15,7 @@ interface MainAppProps {
   initialChoice: OnboardingChoice;
 }
 
-export type Page = 'explore' | 'live' | 'garden' | 'share';
+export type Page = 'explore' | 'live' | 'garden' | 'share' | 'promise';
 
 export function MainApp({ initialChoice }: MainAppProps) {
   const [currentPage, setCurrentPage] = useState<Page>(() => {
@@ -95,6 +96,10 @@ export function MainApp({ initialChoice }: MainAppProps) {
 
       {currentPage === 'share' && (
         <SharePresencePage quietMode={quietMode} />
+      )}
+
+      {currentPage === 'promise' && (
+        <OurPromisePage quietMode={quietMode} />
       )}
 
       {!quietMode && (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { MapPin, Circle, Users, Clock, Headphones } from 'lucide-react';
+import { MapPin, Circle, Users, Clock, Headphones, Radio } from 'lucide-react';
 import { liveThreads, LiveThread } from '../data/mock-data';
 import { Badge } from './ui/badge';
 
@@ -17,11 +17,15 @@ export function LiveThreadsPage({ onThreadSelect, quietMode }: LiveThreadsPagePr
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             className="mb-6 md:mb-8"
           >
-            <h2 className="text-2xl md:text-3xl text-white mb-2">
-              Community Live Threads
-            </h2>
+            <div className="flex items-center gap-2 md:gap-3 mb-2">
+              <Radio className="w-6 h-6 md:w-8 md:h-8 text-purple-400" />
+              <h2 className="text-2xl md:text-3xl text-white">
+                Community Live Threads
+              </h2>
+            </div>
             <p className="text-sm md:text-base text-slate-400 max-w-2xl">
               Real moments from real people. No polish. No filters. Just beautiful, ordinary life as it unfolds.
             </p>
@@ -33,9 +37,9 @@ export function LiveThreadsPage({ onThreadSelect, quietMode }: LiveThreadsPagePr
           {liveThreads.map((thread, index) => (
             <motion.div
               key={thread.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
             >
               <button
                 onClick={() => onThreadSelect(thread)}
@@ -142,9 +146,9 @@ export function LiveThreadsPage({ onThreadSelect, quietMode }: LiveThreadsPagePr
         {/* Info Card */}
         {!quietMode && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
             className="mt-8 md:mt-12 p-4 md:p-6 bg-purple-500/10 border border-purple-500/20 rounded-2xl"
           >
             <h4 className="text-white text-base md:text-lg mb-2">

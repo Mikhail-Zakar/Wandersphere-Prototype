@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Compass, Radio, Flower2, Moon, Sun, Sparkles, Heart, Menu } from 'lucide-react';
+import { Compass, Radio, Flower2, Moon, Sun, Sparkles, Heart, Menu, Shield } from 'lucide-react';
 import { Page } from './main-app';
 import { Button } from './ui/button';
 import { WandersphereLogo } from './wandersphere-logo';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from './ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from './ui/sheet';
 
 interface NavigationProps {
   currentPage: Page;
@@ -27,6 +27,7 @@ export function Navigation({
     { id: 'explore' as const, label: 'Explore', icon: Compass },
     { id: 'live' as const, label: 'Live Threads', icon: Radio },
     { id: 'garden' as const, label: 'Memory Garden', icon: Flower2 },
+    { id: 'promise' as const, label: 'Our Promise', icon: Shield },
     { id: 'share' as const, label: 'Share', icon: Heart },
   ];
 
@@ -75,7 +76,8 @@ export function Navigation({
                     <Menu className="w-5 h-5" />
                   </Button>
 
-                  <WandersphereLogo className="w-8 h-8 md:w-10 md:h-10" />
+                  {/* Logo - Hidden on mobile, shown on desktop */}
+                  <WandersphereLogo className="hidden md:block w-8 h-8 md:w-10 md:h-10" />
 
                   {/* Desktop Nav Items */}
                   <div className="hidden md:flex items-center gap-2">
@@ -130,6 +132,9 @@ export function Navigation({
               <WandersphereLogo className="w-10 h-10" />
               <SheetTitle className="text-white text-xl">Wandersphere</SheetTitle>
             </div>
+            <SheetDescription className="sr-only">
+              Navigation menu for Wandersphere
+            </SheetDescription>
           </SheetHeader>
           
           <div className="flex flex-col gap-2 mt-6">

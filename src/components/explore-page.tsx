@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { MapPin, Clock, Headphones, Circle } from 'lucide-react';
+import { MapPin, Clock, Headphones, Circle, Compass } from 'lucide-react';
 import { experiences, Experience } from '../data/mock-data';
 import { Badge } from './ui/badge';
 
@@ -23,11 +23,15 @@ export function ExplorePage({ onExperienceSelect, quietMode }: ExplorePageProps)
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             className="mb-6 md:mb-8"
           >
-            <h2 className="text-2xl md:text-3xl text-white mb-2">
-              Explore Moments
-            </h2>
+            <div className="flex items-center gap-2 md:gap-3 mb-2">
+              <Compass className="w-6 h-6 md:w-8 md:h-8 text-purple-400" />
+              <h2 className="text-2xl md:text-3xl text-white">
+                Explore Moments
+              </h2>
+            </div>
             <p className="text-sm md:text-base text-slate-400">
               Immersive experiences from around the world
             </p>
@@ -65,7 +69,7 @@ export function ExplorePage({ onExperienceSelect, quietMode }: ExplorePageProps)
               key={experience.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
             >
               <button
                 onClick={() => onExperienceSelect(experience)}
