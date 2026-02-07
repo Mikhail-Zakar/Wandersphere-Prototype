@@ -1,176 +1,220 @@
-import React from 'react';
+import { useRef, useEffect } from "react";
 
-interface WandersphereLogoProps {
-  className?: string;
-  size?: number;
-}
+const SIZE = 800;
+const CENTER = SIZE / 2;
 
-export function WandersphereLogo({ 
-  className = '', 
-  size = 40 
-}: WandersphereLogoProps) {
-  const viewBoxSize = size * 10;
-  const center = viewBoxSize / 2;
-  const outerRadius = center * 0.9;
-  const middleRadius = center * 0.65;
-  const sphereRadius = center * 0.4;
+export default function CosmicOrbitalCore() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext("2d")!;
+    canvas.width = SIZE;
+    canvas.height = SIZE;
+
+    let t = 0;
+
+    function drawBackground() {
+      const g = ctx.createRadialGradient(
+        CENTER, CENTER, 0,
+        CENTER, CENTER, CENTER
+      );
+      g.addColorStop(0, "#0f1022");
+      g.addColorStop(0.6, "#090a15");
+      g.addColorStop(1, "#030409");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, SIZE, SIZE);
+    }
+
+    function drawOuterHalo() {
+      ctx.save();
+      ctx.translate(CENTER, CENTER);
+      ctx.rotate(t * 0.00005);
+
+      for (let i = 0; i < 60; i++) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(160,120,255,${0.015})`;
+        ctx.lineWidth = 1;
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = "#9b7bff";
+        ctx.arc(0, 0, 300 + i * 0.6, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+    function drawDashedOrbit() {
+      ctx.save();
+      ctx.translate(CENTER, CENTER);
+      ctx.rotate(-t * 0.0003);
+      ctx.setLineDash([14, 12]);
+      ctx.lineDashOffset = -t * 0.3;
+      ctx.strokeStyle = "#d8c5ff";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(0, 0, 220, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawInnerRings() {
+      ctx.save();
+      ctx.translate(CENTER, CENTER);
+      ctx.rotate(t * 0.0002);
+
+      [180, 165].forEach((r, i) => {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(140,100,255,${0.3 - i * 0.1})`;
+        ctx.lineWidth = 1;
+        ctx.setLineDash(i === 1 ? [4, 6] : []);
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+
+      ctx.restore();
+    }
+
+    function drawDiagonalAxis() {
+      ctx.save();
+      ctx.translate(CENTER, CENTER);
+      ctx.rotate(Math.PI / 4 + t * 0.0001);
+      ctx.strokeStyle = "#9f7bff";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(-350, 0);
+      ctx.lineTo(350, 0);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawCoreSphere() {
+      ctx.save();
+      ctx.translate(CENTER, CENTER);
+
+      const g = ctx.createRadialGradient(-40, -40, 30, 0, 0, 150);
+      g.addColorStop(0, "#d0aaff");
+      g.addColorStop(0.5, "#7b49e6");
+      g.addColorStop(1, "#2a145f");
+
+      ctx.fillStyle = g;
+      ctx.shadowBlur = 50;
+      ctx.shadowColor = "#7f5bff";
+
+      ctx.beginPath();
+      ctx.arc(0, 0, 140 + Math.sin(t * 0.02) * 1.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function drawRadialStriations() {
+      ctx.save();
+      ctx.translate(CENTER, CENTER);
+      ctx.globalAlpha = 0.06;
+
+      for (let i = 0; i < 160; i++) {
+        ctx.rotate((Math.PI * 2) / 160);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(140, 0);
+        ctx.strokeStyle = "#cbb6ff";
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+    function drawOrbitingBodies() {
+      ctx.save();
+      ctx.translate(CENTER, CENTER);
+
+      const planets = [
+        { r: 220, size: 5, speed: 0.002 },
+        { r: 170, size: 4, speed: -0.003 },
+      ];
+
+      planets.forEach((p, i) => {
+        const a = t * p.speed + i;
+        ctx.beginPath();
+        ctx.fillStyle = "#f2ebff";
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = "#ffffff";
+        ctx.arc(Math.cos(a) * p.r, Math.sin(a) * p.r, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.restore();
+    }
+
+    function drawStars() {
+      ctx.save();
+      ctx.translate(CENTER, CENTER);
+
+      const stars = [
+        { x: 280, y: -40, pulse: 0.03 },
+        { x: -250, y: -260, pulse: 0.02 },
+      ];
+
+      stars.forEach(s => {
+        const p = 0.6 + Math.sin(t * s.pulse) * 0.4;
+        ctx.globalAlpha = p;
+        ctx.shadowBlur = 30;
+        ctx.shadowColor = "#f5e9ff";
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 6, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.restore();
+    }
+
+    function drawParticles() {
+      ctx.save();
+      ctx.translate(CENTER, CENTER);
+      ctx.globalAlpha = 0.4;
+
+      for (let i = 0; i < 40; i++) {
+        const a = (i / 40) * Math.PI * 2 + t * 0.0001;
+        const r = 260 + (i % 6) * 8;
+        ctx.fillStyle = "#cdbbff";
+        ctx.beginPath();
+        ctx.arc(Math.cos(a) * r, Math.sin(a) * r, 1.3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.restore();
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, SIZE, SIZE);
+      drawBackground();
+      drawOuterHalo();
+      drawDashedOrbit();
+      drawInnerRings();
+      drawDiagonalAxis();
+      drawParticles();
+      drawCoreSphere();
+      drawRadialStriations();
+      drawOrbitingBodies();
+      drawStars();
+
+      t++;
+      requestAnimationFrame(loop);
+    }
+
+    loop();
+  }, []);
 
   return (
-    <svg
-      viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={{ width: `${size}px`, height: `${size}px` }}
-    >
-      <circle
-        cx={center}
-        cy={center}
-        r={outerRadius}
-        stroke="#9333EA"
-        strokeWidth="2"
-        strokeDasharray="4 4"
-        opacity="0.75"
-        fill="none"
-      >
-        <animateTransform
-          attributeName="transform"
-          type="rotate"
-          from={`0 ${center} ${center}`}
-          to={`360 ${center} ${center}`}
-          dur="20s"
-          repeatCount="indefinite"
-        />
-      </circle>
-      
-      <circle
-        cx={center}
-        cy={center}
-        r={middleRadius}
-        stroke="#A78BFA"
-        strokeWidth="1.8"
-        strokeDasharray="3 3"
-        opacity="0.65"
-        fill="none"
-      >
-        <animateTransform
-          attributeName="transform"
-          type="rotate"
-          from={`0 ${center} ${center}`}
-          to={`360 ${center} ${center}`}
-          dur="15s"
-          repeatCount="indefinite"
-        />
-      </circle>
-      
-      <radialGradient id="ws-sphere" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stopColor="#6D28D9" />
-        <stop offset="50%" stopColor="#5B21B6" />
-        <stop offset="100%" stopColor="#4C1DB3" />
-      </radialGradient>
-      <circle
-        cx={center}
-        cy={center}
-        r={sphereRadius}
-        fill="url(#ws-sphere)"
-      />
-      
-      <line
-        x1={center}
-        y1={center - sphereRadius}
-        x2={center}
-        y2={center + sphereRadius}
-        stroke="#7C3AED"
-        strokeWidth="1.5"
-        opacity="0.9"
-      />
-      <line
-        x1={center - sphereRadius}
-        y1={center}
-        x2={center + sphereRadius}
-        y2={center}
-        stroke="#7C3AED"
-        strokeWidth="1.5"
-        opacity="0.9"
-      />
-      
-      <circle
-        cx={center + outerRadius}
-        cy={center}
-        r="3.5"
-        fill="#8B5CF6"
-      >
-        <animateTransform
-          attributeName="transform"
-          type="rotate"
-          from={`0 ${center} ${center}`}
-          to={`360 ${center} ${center}`}
-          dur="8s"
-          repeatCount="indefinite"
-        />
-      </circle>
-      <circle
-        cx={center}
-        cy={center - middleRadius}
-        r="2.5"
-        fill="#A78BFA"
-      >
-        <animateTransform
-          attributeName="transform"
-          type="rotate"
-          from={`180 ${center} ${center}`}
-          to={`540 ${center} ${center}`}
-          dur="6s"
-          repeatCount="indefinite"
-        />
-      </circle>
-      
-      <path
-        d={`M${center + sphereRadius * 0.85} ${center - sphereRadius * 0.65} 
-           L${center + sphereRadius * 0.9} ${center - sphereRadius * 0.6} 
-           L${center + sphereRadius * 0.85} ${center - sphereRadius * 0.55} 
-           L${center + sphereRadius * 0.8} ${center - sphereRadius * 0.6} Z`}
-        fill="#C4B5FD"
-        opacity="1"
-      >
-        <animate
-          attributeName="opacity"
-          values="0.4;1;0.4"
-          dur="2s"
-          repeatCount="indefinite"
-        />
-      </path>
-      <path
-        d={`M${center - sphereRadius * 0.85} ${center + sphereRadius * 0.65} 
-           L${center - sphereRadius * 0.8} ${center + sphereRadius * 0.7} 
-           L${center - sphereRadius * 0.85} ${center + sphereRadius * 0.75} 
-           L${center - sphereRadius * 0.9} ${center + sphereRadius * 0.7} Z`}
-        fill="#C4B5FD"
-        opacity="1"
-      >
-        <animate
-          attributeName="opacity"
-          values="0.7;1;0.7"
-          dur="3s"
-          repeatCount="indefinite"
-        />
-      </path>
-      
-      <path
-        d={`M${center + sphereRadius * 0.7} ${center - sphereRadius * 0.8} 
-           L${center + sphereRadius * 0.75} ${center - sphereRadius * 0.75} 
-           L${center + sphereRadius * 0.7} ${center - sphereRadius * 0.7} 
-           L${center + sphereRadius * 0.65} ${center - sphereRadius * 0.75} Z`}
-        fill="#A78BFA"
-        opacity="0.8"
-      >
-        <animate
-          attributeName="opacity"
-          values="0.3;1;0.3"
-          dur="1.5s"
-          repeatCount="indefinite"
-        />
-      </path>
-    </svg>
+    <canvas
+      ref={canvasRef}
+      style={{
+        width: "800px",
+        height: "800px",
+        display: "block",
+      }}
+    />
   );
 }
