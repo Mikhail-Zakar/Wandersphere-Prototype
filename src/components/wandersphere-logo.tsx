@@ -12,7 +12,7 @@ export function WandersphereLogo({ className = '' }: WandersphereLogoProps) {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      {/* Outer orbit ring - purple gradient */}
+      {/* Outer orbit ring */}
       <circle
         cx="20"
         cy="20"
@@ -23,7 +23,7 @@ export function WandersphereLogo({ className = '' }: WandersphereLogoProps) {
         opacity="0.6"
       />
       
-      {/* Middle orbit ring - lighter purple */}
+      {/* Middle orbit ring */}
       <circle
         cx="20"
         cy="20"
@@ -34,7 +34,7 @@ export function WandersphereLogo({ className = '' }: WandersphereLogoProps) {
         opacity="0.5"
       />
       
-      {/* Central sphere - globe representation */}
+      {/* Central sphere */}
       <circle
         cx="20"
         cy="20"
