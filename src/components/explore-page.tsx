@@ -25,7 +25,9 @@ export function ExplorePage({ onExperienceSelect }: ExplorePageProps) {
           className="mb-6 md:mb-8"
         >
           <div className="flex items-center gap-2 md:gap-3 mb-2">
-            <Compass className="w-6 h-6 md:w-8 md:h-8 text-purple-400" />
+            <div className="inline-flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 shadow-lg shadow-purple-500/25">
+              <Compass className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
+            </div>
             <h2 className="text-2xl md:text-3xl text-white">
               Explore Moments
             </h2>
