@@ -20,7 +20,7 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
   }, []);
 
   const handleRemove = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Prevent opening the experience when removing
     const saved = JSON.parse(localStorage.getItem('wandersphere_saved') || '[]');
     const filtered = saved.filter((expId: string) => expId !== id);
     localStorage.setItem('wandersphere_saved', JSON.stringify(filtered));
@@ -90,6 +90,7 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
                 onClick={() => handleExperienceClick(experience)}
                 className="group relative overflow-hidden rounded-2xl bg-slate-900/50 border border-white/10 cursor-pointer hover:border-purple-400/50 transition-all duration-300 hover:scale-[1.02]"
               >
+                {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={experience.imageUrl}
@@ -98,6 +99,7 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
                   
+                  {/* Remove Button */}
                   <button
                     onClick={(e) => handleRemove(experience.id, e)}
                     className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-red-500/80 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
@@ -106,6 +108,7 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
                     <Trash2 className="w-4 h-4 text-white" />
                   </button>
 
+                  {/* Content Overlay */}
                   <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
                     <h3 className="text-lg md:text-xl text-white mb-1">
                       {experience.title}
@@ -117,6 +120,7 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
                   </div>
                 </div>
 
+                {/* Description */}
                 <div className="p-4 md:p-6">
                   <p className="text-slate-300 text-xs md:text-sm italic leading-relaxed">
                     "{experience.description}"
@@ -140,6 +144,7 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
           </div>
         )}
 
+        {/* Reflection Quote */}
         {!quietMode && savedExperiences.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}

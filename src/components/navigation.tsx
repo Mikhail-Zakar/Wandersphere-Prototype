@@ -65,7 +65,7 @@ export function Navigation({
               </Button>
 
               {/* Logo - Hidden on mobile, shown on desktop */}
-              <WandersphereLogo className="hidden md:block w-10 h-10" style={{ transform: 'scale(1)' }} />
+              <WandersphereLogo className="hidden md:block w-8 h-8 md:w-10 md:h-10" />
 
               {/* Desktop Nav Items */}
               <div className="hidden md:flex items-center gap-2">
@@ -115,7 +115,7 @@ export function Navigation({
         <SheetContent side="left" className="bg-slate-900 border-slate-700 text-white w-[280px]">
           <SheetHeader className="border-b border-white/10 pb-4">
             <div className="flex items-center gap-3">
-              <WandersphereLogo className="w-10 h-10" style={{ transform: 'scale(1)' }} />
+              <WandersphereLogo className="w-10 h-10" />
               <SheetTitle className="text-white text-xl">Wandersphere</SheetTitle>
             </div>
             <SheetDescription className="sr-only">
