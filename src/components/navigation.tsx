@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Compass, Radio, Flower2, Moon, Sun, Sparkles, Heart, Menu, Shield } from 'lucide-react';
+import { Compass, Radio, Flower2, Eye, EyeOff, Sparkles, Heart, Menu, Shield } from 'lucide-react';
 import { Page } from './main-app';
 import { Button } from './ui/button';
 import { WandersphereLogo } from './wandersphere-logo';
@@ -44,12 +44,12 @@ export function Navigation({
         animate={{ opacity: 1, scale: 1 }}
         onClick={onQuietModeToggle}
         className="fixed top-3 right-4 md:top-4 md:right-6 z-[60] p-2.5 md:p-3 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 hover:bg-slate-800/90 text-white transition-all duration-200 shadow-lg hover:shadow-xl"
-        title={quietMode ? "Exit Quiet Mode" : "Enter Quiet Mode"}
+        title={quietMode ? "Show Navigation & Features" : "Enter Quiet Mode"}
       >
         {quietMode ? (
-          <Sun className="w-4 h-4 md:w-5 md:h-5" />
+          <Eye className="w-4 h-4 md:w-5 md:h-5" />
         ) : (
-          <Moon className="w-4 h-4 md:w-5 md:h-5" />
+          <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
         )}
       </motion.button>
 

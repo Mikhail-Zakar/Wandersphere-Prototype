@@ -1,10 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, Bookmark, BookmarkCheck, Sparkles, Info, Sun, Moon } from 'lucide-react';
+import { ArrowLeft, Bookmark, BookmarkCheck, Sparkles, Info, Eye, EyeOff } from 'lucide-react';
 import { Experience } from '../data/mock-data';
 import { Button } from './ui/button';
 import { AudioPlayer } from './audio-player';
 import { toast } from 'sonner@2.0.3';
+import { getAylaInsights } from '../utils/ayla-insights';
+import { PostcardModal } from './postcard-modal';
 
 interface ExperienceViewerProps {
   experience: Experience;
@@ -21,6 +23,30 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
   const [showInfo, setShowInfo] = useState(!initialQuietMode);
   const [audioEnabled, setAudioEnabled] = useState(true); // Start with audio ON by default for immersion
   const [showAylaInsight, setShowAylaInsight] = useState(false);
+  const [currentInsightIndex, setCurrentInsightIndex] = useState(0);
+  const [showPostcard, setShowPostcard] = useState(false);
+  const [postcardOffered, setPostcardOffered] = useState(false);
+
+  const aylaInsights = getAylaInsights(experience);
+
+  // Show postcard after 30 seconds if not already offered for this experience
+  useEffect(() => {
+    const offered = localStorage.getItem(`wandersphere_postcard_${experience.id}`);
+    if (offered) {
+      setPostcardOffered(true);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      if (!postcardOffered) {
+        setShowPostcard(true);
+        localStorage.setItem(`wandersphere_postcard_${experience.id}`, 'true');
+        setPostcardOffered(true);
+      }
+    }, 30000); // 30 seconds
+
+    return () => clearTimeout(timer);
+  }, [experience.id, postcardOffered]);
 
   const handleSave = () => {
     const saved = JSON.parse(localStorage.getItem('wandersphere_saved') || '[]');
@@ -37,11 +63,14 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
     }
   };
 
-  const aylaInsights = [
-    `The stone is ${experience.location === 'Kandy' ? 'ancient granite, worn smooth by millions of hands' : 'weathered by centuries of ocean spray'}.`,
-    `Listen closely — that sound is ${experience.soundscape?.split(',')[0] || 'the essence of this place'}.`,
-    `${experience.host?.name} has been sharing this moment for ${Math.floor(Math.random() * 10) + 5} years.`,
-  ];
+  const handleAylaClick = () => {
+    if (showAylaInsight) {
+      // Cycle to next insight
+      setCurrentInsightIndex((prev) => (prev + 1) % aylaInsights.length);
+    } else {
+      setShowAylaInsight(true);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
@@ -54,12 +83,12 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
           setShowInfo(quietMode); // Show info when exiting quiet mode
         }}
         className="fixed top-4 right-4 md:top-6 md:right-6 z-[60] p-2 md:p-3 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 hover:bg-slate-800/90 text-white transition-all duration-200 shadow-lg hover:shadow-xl"
-        title={quietMode ? "Exit Quiet Mode" : "Enter Quiet Mode"}
+        title={quietMode ? "Show Navigation & Features" : "Enter Quiet Mode"}
       >
         {quietMode ? (
-          <Sun className="w-4 h-4 md:w-5 md:h-5" />
+          <Eye className="w-4 h-4 md:w-5 md:h-5" />
         ) : (
-          <Moon className="w-4 h-4 md:w-5 md:h-5" />
+          <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
         )}
       </motion.button>
 
@@ -219,7 +248,7 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
               {/* Ayla Insight */}
               <div className="max-w-3xl mx-auto text-center">
                 <Button
-                  onClick={() => setShowAylaInsight(!showAylaInsight)}
+                  onClick={handleAylaClick}
                   variant="ghost"
                   className="text-purple-300 hover:text-purple-200 hover:bg-purple-500/10"
                 >
@@ -236,7 +265,7 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
                       className="mt-4 p-4 bg-purple-500/10 border border-purple-500/20 rounded-xl"
                     >
                       <p className="text-slate-200 text-sm leading-relaxed">
-                        {aylaInsights[Math.floor(Math.random() * aylaInsights.length)]}
+                        {aylaInsights[currentInsightIndex]}
                       </p>
                     </motion.div>
                   )}
@@ -246,6 +275,14 @@ export function ExperienceViewer({ experience, onBack, quietMode: initialQuietMo
           )}
         </AnimatePresence>
       </div>
+
+      {/* Postcard Modal */}
+      <PostcardModal
+        experience={experience}
+        isOpen={showPostcard}
+        onClose={() => setShowPostcard(false)}
+        quote={aylaInsights[0]}
+      />
     </div>
   );
 }

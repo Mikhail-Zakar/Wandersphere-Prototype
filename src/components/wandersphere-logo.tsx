@@ -1,176 +1,150 @@
 import React from 'react';
 
-interface WandersphereLogoProps {
+interface WanderspherLogoProps {
   className?: string;
-  size?: number;
 }
 
-export function WandersphereLogo({ 
-  className = '', 
-  size = 40 
-}: WandersphereLogoProps) {
-  const viewBoxSize = size * 10;
-  const center = viewBoxSize / 2;
-  const outerRadius = center * 0.9;
-  const middleRadius = center * 0.65;
-  const sphereRadius = center * 0.4;
-
+export function WandersphereLogo({ className = '' }: WanderspherLogoProps) {
   return (
     <svg
-      viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
+      viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      style={{ width: `${size}px`, height: `${size}px` }}
     >
+      {/* Outer orbit ring - purple gradient */}
       <circle
-        cx={center}
-        cy={center}
-        r={outerRadius}
-        stroke="#9333EA"
-        strokeWidth="2"
+        cx="20"
+        cy="20"
+        r="18"
+        stroke="url(#gradient1)"
+        strokeWidth="1.5"
         strokeDasharray="4 4"
-        opacity="0.75"
-        fill="none"
-      >
-        <animateTransform
-          attributeName="transform"
-          type="rotate"
-          from={`0 ${center} ${center}`}
-          to={`360 ${center} ${center}`}
-          dur="20s"
-          repeatCount="indefinite"
-        />
-      </circle>
+        opacity="0.6"
+      />
       
+      {/* Middle orbit ring - lighter purple */}
       <circle
-        cx={center}
-        cy={center}
-        r={middleRadius}
-        stroke="#A78BFA"
-        strokeWidth="1.8"
+        cx="20"
+        cy="20"
+        r="13"
+        stroke="url(#gradient2)"
+        strokeWidth="1.2"
         strokeDasharray="3 3"
-        opacity="0.65"
+        opacity="0.5"
+      />
+      
+      {/* Central sphere - globe representation */}
+      <circle
+        cx="20"
+        cy="20"
+        r="8"
+        fill="url(#gradient3)"
+      />
+      
+      {/* Vertical meridian line */}
+      <ellipse
+        cx="20"
+        cy="20"
+        rx="4"
+        ry="8"
+        stroke="rgba(139, 92, 246, 0.6)"
+        strokeWidth="1"
         fill="none"
-      >
-        <animateTransform
-          attributeName="transform"
-          type="rotate"
-          from={`0 ${center} ${center}`}
-          to={`360 ${center} ${center}`}
-          dur="15s"
-          repeatCount="indefinite"
-        />
-      </circle>
-      
-      <radialGradient id="ws-sphere" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stopColor="#6D28D9" />
-        <stop offset="50%" stopColor="#5B21B6" />
-        <stop offset="100%" stopColor="#4C1DB3" />
-      </radialGradient>
-      <circle
-        cx={center}
-        cy={center}
-        r={sphereRadius}
-        fill="url(#ws-sphere)"
       />
       
-      <line
-        x1={center}
-        y1={center - sphereRadius}
-        x2={center}
-        y2={center + sphereRadius}
-        stroke="#7C3AED"
-        strokeWidth="1.5"
-        opacity="0.9"
-      />
-      <line
-        x1={center - sphereRadius}
-        y1={center}
-        x2={center + sphereRadius}
-        y2={center}
-        stroke="#7C3AED"
-        strokeWidth="1.5"
-        opacity="0.9"
+      {/* Horizontal latitude line */}
+      <ellipse
+        cx="20"
+        cy="20"
+        rx="8"
+        ry="3"
+        stroke="rgba(139, 92, 246, 0.6)"
+        strokeWidth="1"
+        fill="none"
       />
       
+      {/* Traveling dot on outer orbit */}
       <circle
-        cx={center + outerRadius}
-        cy={center}
-        r="3.5"
-        fill="#8B5CF6"
-      >
-        <animateTransform
-          attributeName="transform"
-          type="rotate"
-          from={`0 ${center} ${center}`}
-          to={`360 ${center} ${center}`}
-          dur="8s"
-          repeatCount="indefinite"
-        />
-      </circle>
-      <circle
-        cx={center}
-        cy={center - middleRadius}
-        r="2.5"
+        cx="38"
+        cy="20"
+        r="2"
         fill="#A78BFA"
       >
         <animateTransform
           attributeName="transform"
           type="rotate"
-          from={`180 ${center} ${center}`}
-          to={`540 ${center} ${center}`}
+          from="0 20 20"
+          to="360 20 20"
+          dur="8s"
+          repeatCount="indefinite"
+        />
+      </circle>
+      
+      {/* Traveling dot on middle orbit */}
+      <circle
+        cx="33"
+        cy="20"
+        r="1.5"
+        fill="#C4B5FD"
+      >
+        <animateTransform
+          attributeName="transform"
+          type="rotate"
+          from="180 20 20"
+          to="540 20 20"
           dur="6s"
           repeatCount="indefinite"
         />
       </circle>
       
+      {/* Sparkle accent - top right */}
       <path
-        d={`M${center + sphereRadius * 0.85} ${center - sphereRadius * 0.65} 
-           L${center + sphereRadius * 0.9} ${center - sphereRadius * 0.6} 
-           L${center + sphereRadius * 0.85} ${center - sphereRadius * 0.55} 
-           L${center + sphereRadius * 0.8} ${center - sphereRadius * 0.6} Z`}
-        fill="#C4B5FD"
-        opacity="1"
-      >
-        <animate
-          attributeName="opacity"
-          values="0.4;1;0.4"
-          dur="2s"
-          repeatCount="indefinite"
-        />
-      </path>
-      <path
-        d={`M${center - sphereRadius * 0.85} ${center + sphereRadius * 0.65} 
-           L${center - sphereRadius * 0.8} ${center + sphereRadius * 0.7} 
-           L${center - sphereRadius * 0.85} ${center + sphereRadius * 0.75} 
-           L${center - sphereRadius * 0.9} ${center + sphereRadius * 0.7} Z`}
-        fill="#C4B5FD"
-        opacity="1"
-      >
-        <animate
-          attributeName="opacity"
-          values="0.7;1;0.7"
-          dur="3s"
-          repeatCount="indefinite"
-        />
-      </path>
-      
-      <path
-        d={`M${center + sphereRadius * 0.7} ${center - sphereRadius * 0.8} 
-           L${center + sphereRadius * 0.75} ${center - sphereRadius * 0.75} 
-           L${center + sphereRadius * 0.7} ${center - sphereRadius * 0.7} 
-           L${center + sphereRadius * 0.65} ${center - sphereRadius * 0.75} Z`}
-        fill="#A78BFA"
+        d="M30 12 L31 13 L30 14 L29 13 Z"
+        fill="#DDD6FE"
         opacity="0.8"
       >
         <animate
           attributeName="opacity"
           values="0.3;1;0.3"
-          dur="1.5s"
+          dur="2s"
           repeatCount="indefinite"
         />
       </path>
+      
+      {/* Sparkle accent - bottom left */}
+      <path
+        d="M10 28 L11 29 L10 30 L9 29 Z"
+        fill="#DDD6FE"
+        opacity="0.8"
+      >
+        <animate
+          attributeName="opacity"
+          values="0.8;0.3;0.8"
+          dur="3s"
+          repeatCount="indefinite"
+        />
+      </path>
+      
+      {/* Gradients */}
+      <defs>
+        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#9333EA" stopOpacity="0.8" />
+          <stop offset="50%" stopColor="#A78BFA" stopOpacity="0.6" />
+          <stop offset="100%" stopColor="#C4B5FD" stopOpacity="0.4" />
+        </linearGradient>
+        
+        <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#A78BFA" stopOpacity="0.7" />
+          <stop offset="100%" stopColor="#DDD6FE" stopOpacity="0.5" />
+        </linearGradient>
+        
+        <radialGradient id="gradient3">
+          <stop offset="0%" stopColor="#8B5CF6" />
+          <stop offset="50%" stopColor="#7C3AED" />
+          <stop offset="100%" stopColor="#6D28D9" />
+        </radialGradient>
+      </defs>
     </svg>
   );
 }

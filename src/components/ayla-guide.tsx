@@ -13,24 +13,34 @@ interface AylaGuideProps {
 export function AylaGuide({ isOpen, onClose, currentPage }: AylaGuideProps) {
   const messages = {
     explore: [
-      "These aren't just places — they're invitations to be present.",
-      "Each experience is curated by someone who wants you to understand their world.",
-      "Take your time. There's no rush here. Just breathe and be.",
+      "These aren't just places — they're invitations to be present. Every location holds a thousand unspoken stories.",
+      "Each experience is curated by someone who wants you to understand their world, not as a tourist, but as a soul passing through.",
+      "Take your time. There's no rush here. The temple bells will still ring. The fisherman will still mend his nets. Just breathe and be.",
+      "Notice the small things: the way light falls, the texture of stone worn by a million hands, the particular smell of morning in a place you've never been.",
     ],
     live: [
-      "Shh… listen. These are real moments, happening right now.",
-      "The people you'll meet here aren't performing. They're sharing.",
-      "Remember: no likes, no comments. Just quiet witnessing.",
+      "Shh… listen. These are real moments, happening right now, thousands of miles away. You're not watching — you're witnessing.",
+      "The people you'll meet here aren't performing. They're living. Their ordinary is someone else's extraordinary.",
+      "Remember: no likes, no comments. Just quiet witnessing. Your presence is enough. Your attention is the gift.",
+      "Feel the rhythm of their day. Morning tea. Evening prayers. The universal cadence of human life unfolding in its infinite variety.",
     ],
     garden: [
-      "This is your sanctuary. A place to return when you need grounding.",
-      "Each moment here is a reminder of beauty you chose to notice.",
-      "Your garden grows with intention, not with volume.",
+      "This is your sanctuary. A place to return when the world feels too loud, too fast, too much.",
+      "Each moment here is a reminder of beauty you chose to notice. Not because it was trending. Because it moved you.",
+      "Your garden grows with intention, not with volume. Ten meaningful moments matter more than a thousand scrolls.",
+      "Come back here when you need grounding. These images, these sounds — they're portals back to presence.",
     ],
     share: [
-      "Your presence matters. Your perspective is unique.",
-      "Share what moves you, so others can feel what you've felt.",
-      "Every moment you contribute becomes part of someone else's journey.",
+      "Your presence matters. Your perspective is unique. The way you see morning light in your city is unlike anyone else in the world.",
+      "Share what moves you, so others can feel what you've felt. Not to perform. Not to impress. To connect.",
+      "Every moment you contribute becomes part of someone else's journey. You become the host, and that's sacred.",
+      "The world doesn't need more content. It needs more truth. More raw, beautiful, ordinary truth.",
+    ],
+    promise: [
+      "You deserve experiences that honor your humanity, not harvest your attention.",
+      "Wandersphere was built on a promise: real connection over engineered engagement. Presence over performance.",
+      "We will never sell your data. Never optimize for addiction. Never mistake your worth for your metrics.",
+      "This platform exists to help you travel through time and space with wonder, not doom-scroll into numbness.",
     ],
   };
 

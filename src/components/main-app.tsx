@@ -29,6 +29,18 @@ export function MainApp({ initialChoice }: MainAppProps) {
   const [quietMode, setQuietMode] = useState(initialChoice === 'quiet');
   const [showAyla, setShowAyla] = useState(false);
 
+  // Scroll to top whenever page changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
+  // Scroll to top when opening experience or thread
+  useEffect(() => {
+    if (selectedExperience || selectedLiveThread) {
+      window.scrollTo(0, 0);
+    }
+  }, [selectedExperience, selectedLiveThread]);
+
   const handleExperienceSelect = (experience: Experience) => {
     setSelectedExperience(experience);
   };
@@ -40,6 +52,8 @@ export function MainApp({ initialChoice }: MainAppProps) {
   const handleBack = () => {
     setSelectedExperience(null);
     setSelectedLiveThread(null);
+    // Scroll to top when going back
+    window.scrollTo(0, 0);
   };
 
   // Show different content based on current state

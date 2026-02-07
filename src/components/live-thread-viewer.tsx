@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, Mic, Send, MessageCircle, Sparkles, Gift, Info, Sun, Moon } from 'lucide-react';
+import { ArrowLeft, Mic, Send, MessageCircle, Sparkles, Gift, Info, Eye, EyeOff } from 'lucide-react';
 import { LiveThread } from '../data/mock-data';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { AudioPlayer } from './audio-player';
 import { toast } from 'sonner@2.0.3';
+import { getAylaThreadInsights } from '../utils/ayla-insights';
 
 interface LiveThreadViewerProps {
   thread: LiveThread;
@@ -20,6 +21,8 @@ export function LiveThreadViewer({ thread, onBack, quietMode: initialQuietMode }
   const [chatMessage, setChatMessage] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [audioEnabled, setAudioEnabled] = useState(true); // Start with audio ON by default for immersion
+  const [showAylaInsight, setShowAylaInsight] = useState(false);
+  const [currentInsightIndex, setCurrentInsightIndex] = useState(0);
 
   const handleSendOffering = () => {
     toast.success('✨ Virtual candle lit and sent to ' + thread.host.name);
@@ -42,6 +45,17 @@ export function LiveThreadViewer({ thread, onBack, quietMode: initialQuietMode }
     }
   };
 
+  const aylaInsights = getAylaThreadInsights(thread);
+
+  const handleAylaClick = () => {
+    if (showAylaInsight) {
+      // Cycle to next insight
+      setCurrentInsightIndex((prev) => (prev + 1) % aylaInsights.length);
+    } else {
+      setShowAylaInsight(true);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
       {/* Floating Quiet Mode Toggle - Adjusted position to avoid overlap */}
@@ -53,12 +67,12 @@ export function LiveThreadViewer({ thread, onBack, quietMode: initialQuietMode }
           setShowInfo(quietMode);
         }}
         className="fixed top-4 right-4 md:top-6 md:right-6 z-[60] p-2 md:p-3 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 hover:bg-slate-800/90 text-white transition-all duration-200 shadow-lg hover:shadow-xl"
-        title={quietMode ? "Exit Quiet Mode" : "Enter Quiet Mode"}
+        title={quietMode ? "Show Navigation & Features" : "Enter Quiet Mode"}
       >
         {quietMode ? (
-          <Sun className="w-4 h-4 md:w-5 md:h-5" />
+          <Eye className="w-4 h-4 md:w-5 md:h-5" />
         ) : (
-          <Moon className="w-4 h-4 md:w-5 md:h-5" />
+          <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
         )}
       </motion.button>
 
@@ -216,6 +230,14 @@ export function LiveThreadViewer({ thread, onBack, quietMode: initialQuietMode }
                       <Gift className="w-4 h-4 mr-2" />
                       Light a Candle
                     </Button>
+
+                    <Button
+                      onClick={handleAylaClick}
+                      className="bg-white/10 hover:bg-white/20 text-white border border-white/20"
+                    >
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      Ayla Insight
+                    </Button>
                   </div>
                 )}
 
@@ -257,6 +279,29 @@ export function LiveThreadViewer({ thread, onBack, quietMode: initialQuietMode }
                           <p>• Digital offerings appear as gentle notifications</p>
                           <p>• Chat messages are visible to other viewers</p>
                           <p className="italic">No likes. No comments. Just human resonance.</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Ayla Insight Panel */}
+                <AnimatePresence>
+                  {showAylaInsight && thread.isLive && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 space-y-4">
+                        <div>
+                          <h4 className="text-sm text-slate-400 mb-3">
+                            Ayla Insight
+                          </h4>
+                          <p className="text-sm text-slate-300">
+                            {aylaInsights[currentInsightIndex]}
+                          </p>
                         </div>
                       </div>
                     </motion.div>

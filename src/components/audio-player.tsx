@@ -91,7 +91,7 @@ export function AudioPlayer({
       if (isEnabled) {
         try {
           setIsLoading(true);
-          audio.currentTime = 0;
+          // Don't reset playback position - let it continue from where it was
           await audio.play();
           console.log('Audio playback started successfully');
         } catch (error) {
