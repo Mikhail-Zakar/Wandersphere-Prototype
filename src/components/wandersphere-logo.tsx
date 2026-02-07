@@ -7,102 +7,124 @@ interface WandersphereLogoProps {
 export function WandersphereLogo({ className = '' }: WandersphereLogoProps) {
   return (
     <svg
-      viewBox="0 0 40 40"
+      viewBox="0 0 400 400"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      style={{ width: '100%', maxWidth: '40px', height: 'auto' }}
     >
-      {/* Outer orbit ring */}
+      {/* Outer orbital ring */}
       <circle
-        cx="20"
-        cy="20"
-        r="18"
-        stroke="url(#gradient1)"
+        cx="200"
+        cy="200"
+        r="180"
+        stroke="#9333EA"
         strokeWidth="1.5"
         strokeDasharray="4 4"
         opacity="0.6"
-      />
+        fill="none"
+      >
+        <animateTransform
+          attributeName="transform"
+          type="rotate"
+          from="0 200 200"
+          to="360 200 200"
+          dur="20s"
+          repeatCount="indefinite"
+        />
+      </circle>
       
-      {/* Middle orbit ring */}
+      {/* Middle orbital ring */}
       <circle
-        cx="20"
-        cy="20"
-        r="13"
-        stroke="url(#gradient2)"
+        cx="200"
+        cy="200"
+        r="130"
+        stroke="#A78BFA"
         strokeWidth="1.2"
         strokeDasharray="3 3"
         opacity="0.5"
+        fill="none"
+      >
+        <animateTransform
+          attributeName="transform"
+          type="rotate"
+          from="0 200 200"
+          to="360 200 200"
+          dur="15s"
+          repeatCount="indefinite"
+        />
+      </circle>
+      
+      {/* Central sphere with gradient */}
+      <radialGradient id="sphereGradient" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="#8B5CF6" />
+        <stop offset="50%" stopColor="#7C3AED" />
+        <stop offset="100%" stopColor="#6D28D9" />
+      </radialGradient>
+      <circle
+        cx="200"
+        cy="200"
+        r="80"
+        fill="url(#sphereGradient)"
       />
       
-      {/* Central sphere */}
+      {/* Meridian lines */}
+      <line
+        x1="200"
+        y1="120"
+        x2="200"
+        y2="280"
+        stroke="#A78BFA"
+        strokeWidth="1"
+        opacity="0.8"
+      />
+      <line
+        x1="120"
+        y1="200"
+        x2="280"
+        y2="200"
+        stroke="#A78BFA"
+        strokeWidth="1"
+        opacity="0.8"
+      />
+      
+      {/* Orbiting dots */}
       <circle
-        cx="20"
-        cy="20"
+        cx="380"
+        cy="200"
         r="8"
-        fill="url(#gradient3)"
-      />
-      
-      {/* Vertical meridian line */}
-      <ellipse
-        cx="20"
-        cy="20"
-        rx="4"
-        ry="8"
-        stroke="rgba(139, 92, 246, 0.6)"
-        strokeWidth="1"
-        fill="none"
-      />
-      
-      {/* Horizontal latitude line */}
-      <ellipse
-        cx="20"
-        cy="20"
-        rx="8"
-        ry="3"
-        stroke="rgba(139, 92, 246, 0.6)"
-        strokeWidth="1"
-        fill="none"
-      />
-      
-      {/* Traveling dot on outer orbit */}
-      <circle
-        cx="38"
-        cy="20"
-        r="2"
         fill="#A78BFA"
       >
         <animateTransform
           attributeName="transform"
           type="rotate"
-          from="0 20 20"
-          to="360 20 20"
+          from="0 200 200"
+          to="360 200 200"
           dur="8s"
           repeatCount="indefinite"
         />
       </circle>
-      
-      {/* Traveling dot on middle orbit */}
       <circle
-        cx="33"
-        cy="20"
-        r="1.5"
+        cx="200"
+        cy="120"
+        r="6"
         fill="#C4B5FD"
       >
         <animateTransform
           attributeName="transform"
           type="rotate"
-          from="180 20 20"
-          to="540 20 20"
+          from="0 200 200"
+          to="360 200 200"
           dur="6s"
           repeatCount="indefinite"
         />
       </circle>
       
-      {/* Sparkle accent - top right */}
+      {/* Sparkles */}
       <path
-        d="M30 12 L31 13 L30 14 L29 13 Z"
+        d="M300 100 L305 105 L300 110 L295 105 Z"
         fill="#DDD6FE"
-        opacity="0.8"
+        opacity="0.7"
       >
         <animate
           attributeName="opacity"
@@ -111,40 +133,30 @@ export function WandersphereLogo({ className = '' }: WandersphereLogoProps) {
           repeatCount="indefinite"
         />
       </path>
-      
-      {/* Sparkle accent - bottom left */}
       <path
-        d="M10 28 L11 29 L10 30 L9 29 Z"
+        d="M100 300 L105 305 L100 310 L95 305 Z"
         fill="#DDD6FE"
-        opacity="0.8"
+        opacity="0.7"
       >
         <animate
           attributeName="opacity"
-          values="0.8;0.3;0.8"
+          values="0.7;0.3;0.7"
           dur="3s"
           repeatCount="indefinite"
         />
       </path>
       
-      {/* Gradients */}
-      <defs>
-        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#9333EA" stopOpacity="0.8" />
-          <stop offset="50%" stopColor="#A78BFA" stopOpacity="0.6" />
-          <stop offset="100%" stopColor="#C4B5FD" stopOpacity="0.4" />
-        </linearGradient>
-        
-        <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#A78BFA" stopOpacity="0.7" />
-          <stop offset="100%" stopColor="#DDD6FE" stopOpacity="0.5" />
-        </linearGradient>
-        
-        <radialGradient id="gradient3">
-          <stop offset="0%" stopColor="#8B5CF6" />
-          <stop offset="50%" stopColor="#7C3AED" />
-          <stop offset="100%" stopColor="#6D28D9" />
-        </radialGradient>
-      </defs>
+      {/* Additional subtle elements to match your design */}
+      <path
+        d="M150 150 L160 160 L150 170 L140 160 Z"
+        fill="#9333EA"
+        opacity="0.3"
+      />
+      <path
+        d="M250 250 L260 260 L250 270 L240 260 Z"
+        fill="#9333EA"
+        opacity="0.3"
+      />
     </svg>
   );
 }
