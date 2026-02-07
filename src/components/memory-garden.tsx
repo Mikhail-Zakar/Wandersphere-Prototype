@@ -20,7 +20,7 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
   }, []);
 
   const handleRemove = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent opening the experience when removing
+    e.stopPropagation();
     const saved = JSON.parse(localStorage.getItem('wandersphere_saved') || '[]');
     const filtered = saved.filter((expId: string) => expId !== id);
     localStorage.setItem('wandersphere_saved', JSON.stringify(filtered));
@@ -45,7 +45,9 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
             className="mb-6 md:mb-8"
           >
             <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-              <Flower2 className="w-6 h-6 md:w-8 md:h-8 text-purple-400" />
+              <div className="inline-flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 shadow-lg shadow-purple-500/25">
+                <Flower2 className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
+              </div>
               <h2 className="text-2xl md:text-3xl text-white">
                 Memory Garden
               </h2>
@@ -65,7 +67,9 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
             className="text-center py-12 md:py-20 px-4"
           >
             <div className="max-w-md mx-auto">
-              <Flower2 className="w-12 h-12 md:w-16 md:h-16 text-slate-700 mx-auto mb-3 md:mb-4" />
+              <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 shadow-lg shadow-purple-500/15 mx-auto mb-3 md:mb-4">
+                <Flower2 className="w-8 h-8 md:w-10 md:h-10 text-purple-400/80" />
+              </div>
               <h3 className="text-lg md:text-xl text-white mb-2 md:mb-3">
                 Your garden is empty
               </h3>
@@ -86,7 +90,6 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
                 onClick={() => handleExperienceClick(experience)}
                 className="group relative overflow-hidden rounded-2xl bg-slate-900/50 border border-white/10 cursor-pointer hover:border-purple-400/50 transition-all duration-300 hover:scale-[1.02]"
               >
-                {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={experience.imageUrl}
@@ -95,7 +98,6 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
                   
-                  {/* Remove Button */}
                   <button
                     onClick={(e) => handleRemove(experience.id, e)}
                     className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-red-500/80 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
@@ -104,7 +106,6 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
                     <Trash2 className="w-4 h-4 text-white" />
                   </button>
 
-                  {/* Content Overlay */}
                   <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
                     <h3 className="text-lg md:text-xl text-white mb-1">
                       {experience.title}
@@ -116,7 +117,6 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
                   </div>
                 </div>
 
-                {/* Description */}
                 <div className="p-4 md:p-6">
                   <p className="text-slate-300 text-xs md:text-sm italic leading-relaxed">
                     "{experience.description}"
@@ -140,7 +140,6 @@ export function MemoryGarden({ quietMode, onExperienceSelect }: MemoryGardenProp
           </div>
         )}
 
-        {/* Reflection Quote */}
         {!quietMode && savedExperiences.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
