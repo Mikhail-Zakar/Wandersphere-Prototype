@@ -23,15 +23,14 @@ export function WandersphereLogo({
       className={className}
       style={{ width: `${size}px`, height: `${size}px` }}
     >
-      {/* Outer orbit */}
       <circle
         cx={center}
         cy={center}
         r={outerRadius}
         stroke="#9333EA"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeDasharray="4 4"
-        opacity="0.6"
+        opacity="0.75"
         fill="none"
       >
         <animateTransform
@@ -44,15 +43,14 @@ export function WandersphereLogo({
         />
       </circle>
       
-      {/* Middle orbit */}
       <circle
         cx={center}
         cy={center}
         r={middleRadius}
         stroke="#A78BFA"
-        strokeWidth="1.2"
+        strokeWidth="1.8"
         strokeDasharray="3 3"
-        opacity="0.5"
+        opacity="0.65"
         fill="none"
       >
         <animateTransform
@@ -65,11 +63,10 @@ export function WandersphereLogo({
         />
       </circle>
       
-      {/* Central sphere */}
       <radialGradient id="ws-sphere" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stopColor="#8B5CF6" />
-        <stop offset="50%" stopColor="#7C3AED" />
-        <stop offset="100%" stopColor="#6D28D9" />
+        <stop offset="0%" stopColor="#6D28D9" />
+        <stop offset="50%" stopColor="#5B21B6" />
+        <stop offset="100%" stopColor="#4C1DB3" />
       </radialGradient>
       <circle
         cx={center}
@@ -78,32 +75,30 @@ export function WandersphereLogo({
         fill="url(#ws-sphere)"
       />
       
-      {/* Meridian lines */}
       <line
         x1={center}
         y1={center - sphereRadius}
         x2={center}
         y2={center + sphereRadius}
-        stroke="#A78BFA"
-        strokeWidth="1"
-        opacity="0.8"
+        stroke="#7C3AED"
+        strokeWidth="1.5"
+        opacity="0.9"
       />
       <line
         x1={center - sphereRadius}
         y1={center}
         x2={center + sphereRadius}
         y2={center}
-        stroke="#A78BFA"
-        strokeWidth="1"
-        opacity="0.8"
+        stroke="#7C3AED"
+        strokeWidth="1.5"
+        opacity="0.9"
       />
       
-      {/* Orbiting dots */}
       <circle
         cx={center + outerRadius}
         cy={center}
-        r="2"
-        fill="#A78BFA"
+        r="3.5"
+        fill="#8B5CF6"
       >
         <animateTransform
           attributeName="transform"
@@ -117,8 +112,8 @@ export function WandersphereLogo({
       <circle
         cx={center}
         cy={center - middleRadius}
-        r="1.5"
-        fill="#C4B5FD"
+        r="2.5"
+        fill="#A78BFA"
       >
         <animateTransform
           attributeName="transform"
@@ -130,34 +125,49 @@ export function WandersphereLogo({
         />
       </circle>
       
-      {/* Sparkles */}
       <path
-        d={`M${center + sphereRadius * 0.8} ${center - sphereRadius * 0.6} 
+        d={`M${center + sphereRadius * 0.85} ${center - sphereRadius * 0.65} 
+           L${center + sphereRadius * 0.9} ${center - sphereRadius * 0.6} 
            L${center + sphereRadius * 0.85} ${center - sphereRadius * 0.55} 
-           L${center + sphereRadius * 0.8} ${center - sphereRadius * 0.5} 
-           L${center + sphereRadius * 0.75} ${center - sphereRadius * 0.55} Z`}
-        fill="#DDD6FE"
-        opacity="0.7"
+           L${center + sphereRadius * 0.8} ${center - sphereRadius * 0.6} Z`}
+        fill="#C4B5FD"
+        opacity="1"
       >
         <animate
           attributeName="opacity"
-          values="0.3;1;0.3"
+          values="0.4;1;0.4"
           dur="2s"
           repeatCount="indefinite"
         />
       </path>
       <path
-        d={`M${center - sphereRadius * 0.8} ${center + sphereRadius * 0.6} 
-           L${center - sphereRadius * 0.75} ${center + sphereRadius * 0.65} 
+        d={`M${center - sphereRadius * 0.85} ${center + sphereRadius * 0.65} 
            L${center - sphereRadius * 0.8} ${center + sphereRadius * 0.7} 
-           L${center - sphereRadius * 0.85} ${center + sphereRadius * 0.65} Z`}
-        fill="#DDD6FE"
-        opacity="0.7"
+           L${center - sphereRadius * 0.85} ${center + sphereRadius * 0.75} 
+           L${center - sphereRadius * 0.9} ${center + sphereRadius * 0.7} Z`}
+        fill="#C4B5FD"
+        opacity="1"
       >
         <animate
           attributeName="opacity"
-          values="0.7;0.3;0.7"
+          values="0.7;1;0.7"
           dur="3s"
+          repeatCount="indefinite"
+        />
+      </path>
+      
+      <path
+        d={`M${center + sphereRadius * 0.7} ${center - sphereRadius * 0.8} 
+           L${center + sphereRadius * 0.75} ${center - sphereRadius * 0.75} 
+           L${center + sphereRadius * 0.7} ${center - sphereRadius * 0.7} 
+           L${center + sphereRadius * 0.65} ${center - sphereRadius * 0.75} Z`}
+        fill="#A78BFA"
+        opacity="0.8"
+      >
+        <animate
+          attributeName="opacity"
+          values="0.3;1;0.3"
+          dur="1.5s"
           repeatCount="indefinite"
         />
       </path>
