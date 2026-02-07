@@ -68,6 +68,21 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
     <div className={`min-h-screen ${quietMode ? 'pt-16 md:pt-20' : 'pt-20 md:pt-24'} pb-12 px-4 md:px-6`}>
       <div className="max-w-7xl mx-auto">
         {/* Hero Section */}
+        {quietMode && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 md:mb-8"
+          >
+            <p className="text-lg md:text-xl text-slate-300 font-light italic mb-2 md:mb-3">
+              "Not tourism. Not sightseeing. But presence."
+            </p>
+            <p className="text-sm md:text-base text-slate-400 max-w-2xl">
+              We help people who can't travel feel truly present in real moments around the world — through the eyes of those who live there.
+            </p>
+          </motion.div>
+        )}
+
         {!quietMode && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
