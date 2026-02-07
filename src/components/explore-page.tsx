@@ -6,10 +6,9 @@ import { Badge } from './ui/badge';
 
 interface ExplorePageProps {
   onExperienceSelect: (experience: Experience) => void;
-  quietMode: boolean;
 }
 
-export function ExplorePage({ onExperienceSelect, quietMode }: ExplorePageProps) {
+export function ExplorePage({ onExperienceSelect }: ExplorePageProps) {
   const [filter, setFilter] = useState<'all' | '360' | 'live' | 'still'>('all');
 
   const filteredExperiences = filter === 'all'
@@ -17,50 +16,48 @@ export function ExplorePage({ onExperienceSelect, quietMode }: ExplorePageProps)
     : experiences.filter(exp => exp.type === filter);
 
   return (
-    <div className={`min-h-screen ${quietMode ? 'pt-16 md:pt-20' : 'pt-20 md:pt-24'} pb-12 px-4 md:px-6`}>
+    <div className="min-h-screen pt-20 md:pt-24 pb-12 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
-        {!quietMode && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-6 md:mb-8"
-          >
-            <div className="flex items-center gap-2 md:gap-3 mb-2">
-              <Compass className="w-6 h-6 md:w-8 md:h-8 text-purple-400" />
-              <h2 className="text-2xl md:text-3xl text-white">
-                Explore Moments
-              </h2>
-            </div>
-            <p className="text-sm md:text-base text-slate-400">
-              Immersive experiences from around the world
-            </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-6 md:mb-8"
+        >
+          <div className="flex items-center gap-2 md:gap-3 mb-2">
+            <Compass className="w-6 h-6 md:w-8 md:h-8 text-purple-400" />
+            <h2 className="text-2xl md:text-3xl text-white">
+              Explore Moments
+            </h2>
+          </div>
+          <p className="text-sm md:text-base text-slate-400">
+            Immersive experiences from around the world
+          </p>
 
-            {/* Filters */}
-            <div className="flex flex-wrap gap-2 mt-4 md:mt-6">
-              {[
-                { id: 'all', label: 'All Experiences' },
-                { id: '360', label: '360° Views' },
-                { id: 'live', label: 'Live Moments' },
-                { id: 'still', label: 'Still Moments' },
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => setFilter(item.id as any)}
-                  className={`
-                    px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm transition-all duration-200
-                    ${filter === item.id
-                      ? 'bg-white/20 text-white'
-                      : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
-                    }
-                  `}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        )}
+          {/* Filters */}
+          <div className="flex flex-wrap gap-2 mt-4 md:mt-6">
+            {[
+              { id: 'all', label: 'All Experiences' },
+              { id: '360', label: '360° Views' },
+              { id: 'live', label: 'Live Moments' },
+              { id: 'still', label: 'Still Moments' },
+            ].map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setFilter(item.id as any)}
+                className={`
+                  px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm transition-all duration-200
+                  ${filter === item.id
+                    ? 'bg-white/20 text-white'
+                    : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
+                  }
+                `}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Experiences Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
@@ -143,18 +140,16 @@ export function ExplorePage({ onExperienceSelect, quietMode }: ExplorePageProps)
                   </div>
 
                   {/* Tags */}
-                  {!quietMode && (
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {experience.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 bg-white/5 rounded text-xs text-slate-400"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {experience.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-1 bg-white/5 rounded text-xs text-slate-400"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </button>
             </motion.div>

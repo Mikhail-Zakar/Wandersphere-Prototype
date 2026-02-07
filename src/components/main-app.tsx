@@ -26,7 +26,6 @@ export function MainApp({ initialChoice }: MainAppProps) {
   
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
   const [selectedLiveThread, setSelectedLiveThread] = useState<LiveThread | null>(null);
-  const [quietMode, setQuietMode] = useState(initialChoice === 'quiet');
   const [showAyla, setShowAyla] = useState(false);
 
   // Scroll to top whenever page changes
@@ -56,13 +55,27 @@ export function MainApp({ initialChoice }: MainAppProps) {
     window.scrollTo(0, 0);
   };
 
+  const handleNavigate = (page: 'explore' | 'live-threads' | 'memory-garden') => {
+    // Close current viewer
+    setSelectedExperience(null);
+    setSelectedLiveThread(null);
+    
+    // Navigate to the requested page
+    if (page === 'explore') setCurrentPage('explore');
+    else if (page === 'live-threads') setCurrentPage('live');
+    else if (page === 'memory-garden') setCurrentPage('garden');
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+  };
+
   // Show different content based on current state
   if (selectedExperience) {
     return (
       <ExperienceViewer
         experience={selectedExperience}
         onBack={handleBack}
-        quietMode={quietMode}
+        onNavigate={handleNavigate}
       />
     );
   }
@@ -72,7 +85,7 @@ export function MainApp({ initialChoice }: MainAppProps) {
       <LiveThreadViewer
         thread={selectedLiveThread}
         onBack={handleBack}
-        quietMode={quietMode}
+        onNavigate={handleNavigate}
       />
     );
   }
@@ -82,47 +95,40 @@ export function MainApp({ initialChoice }: MainAppProps) {
       <Navigation
         currentPage={currentPage}
         onPageChange={setCurrentPage}
-        quietMode={quietMode}
-        onQuietModeToggle={() => setQuietMode(!quietMode)}
         onAylaClick={() => setShowAyla(true)}
       />
 
       {currentPage === 'explore' && (
         <ExplorePage
           onExperienceSelect={handleExperienceSelect}
-          quietMode={quietMode}
         />
       )}
 
       {currentPage === 'live' && (
         <LiveThreadsPage
           onThreadSelect={handleLiveThreadSelect}
-          quietMode={quietMode}
         />
       )}
 
       {currentPage === 'garden' && (
         <MemoryGarden 
-          quietMode={quietMode}
           onExperienceSelect={handleExperienceSelect}
         />
       )}
 
       {currentPage === 'share' && (
-        <SharePresencePage quietMode={quietMode} />
+        <SharePresencePage />
       )}
 
       {currentPage === 'promise' && (
-        <OurPromisePage quietMode={quietMode} />
+        <OurPromisePage />
       )}
 
-      {!quietMode && (
-        <AylaGuide
-          isOpen={showAyla}
-          onClose={() => setShowAyla(false)}
-          currentPage={currentPage}
-        />
-      )}
+      <AylaGuide
+        isOpen={showAyla}
+        onClose={() => setShowAyla(false)}
+        currentPage={currentPage}
+      />
     </div>
   );
 }

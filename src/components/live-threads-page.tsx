@@ -6,31 +6,28 @@ import { Badge } from './ui/badge';
 
 interface LiveThreadsPageProps {
   onThreadSelect: (thread: LiveThread) => void;
-  quietMode: boolean;
 }
 
-export function LiveThreadsPage({ onThreadSelect, quietMode }: LiveThreadsPageProps) {
+export function LiveThreadsPage({ onThreadSelect }: LiveThreadsPageProps) {
   return (
-    <div className={`min-h-screen ${quietMode ? 'pt-16 md:pt-20' : 'pt-20 md:pt-24'} pb-12 px-4 md:px-6`}>
+    <div className="min-h-screen pt-20 md:pt-24 pb-12 px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
-        {!quietMode && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-6 md:mb-8"
-          >
-            <div className="flex items-center gap-2 md:gap-3 mb-2">
-              <Radio className="w-6 h-6 md:w-8 md:h-8 text-purple-400" />
-              <h2 className="text-2xl md:text-3xl text-white">
-                Community Live Threads
-              </h2>
-            </div>
-            <p className="text-sm md:text-base text-slate-400 max-w-2xl">
-              Real moments from real people. No polish. No filters. Just beautiful, ordinary life as it unfolds.
-            </p>
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-6 md:mb-8"
+        >
+          <div className="flex items-center gap-2 md:gap-3 mb-2">
+            <Radio className="w-6 h-6 md:w-8 md:h-8 text-purple-400" />
+            <h2 className="text-2xl md:text-3xl text-white">
+              Community Live Threads
+            </h2>
+          </div>
+          <p className="text-sm md:text-base text-slate-400 max-w-2xl">
+            Real moments from real people. No polish. No filters. Just beautiful, ordinary life as it unfolds.
+          </p>
+        </motion.div>
 
         {/* Live Threads List */}
         <div className="space-y-4 md:space-y-6">
@@ -123,7 +120,7 @@ export function LiveThreadsPage({ onThreadSelect, quietMode }: LiveThreadsPagePr
                         </div>
                       )}
 
-                      {!quietMode && thread.tags && (
+                      {thread.tags && (
                         <div className="flex gap-2">
                           {thread.tags.map((tag) => (
                             <span
@@ -144,23 +141,21 @@ export function LiveThreadsPage({ onThreadSelect, quietMode }: LiveThreadsPagePr
         </div>
 
         {/* Info Card */}
-        {!quietMode && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="mt-8 md:mt-12 p-4 md:p-6 bg-purple-500/10 border border-purple-500/20 rounded-2xl"
-          >
-            <h4 className="text-white text-base md:text-lg mb-2">
-              About Live Threads
-            </h4>
-            <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-              These aren't polished documentaries — they're raw, beautiful, ordinary moments that make you feel: 
-              "I'm witnessing real life, right now." After watching, you can leave a voice note, send a digital offering, 
-              or join a quiet chat room. No likes. No comments. Just human resonance.
-            </p>
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="mt-8 md:mt-12 p-4 md:p-6 bg-purple-500/10 border border-purple-500/20 rounded-2xl"
+        >
+          <h4 className="text-white text-base md:text-lg mb-2">
+            About Live Threads
+          </h4>
+          <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
+            These aren't polished documentaries — they're raw, beautiful, ordinary moments that make you feel: 
+            "I'm witnessing real life, right now." After watching, you can leave a voice note, send a digital offering, 
+            or join a quiet chat room. No likes. No comments. Just human resonance.
+          </p>
+        </motion.div>
       </div>
     </div>
   );

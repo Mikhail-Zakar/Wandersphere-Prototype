@@ -89,19 +89,35 @@ export function AudioPlayer({
 
     const playAudio = async () => {
       if (isEnabled) {
+        // Only try to play if not already playing
+        if (!audio.paused) {
+          console.log('Audio already playing, skipping play() call');
+          return;
+        }
+        
         try {
           setIsLoading(true);
           // Don't reset playback position - let it continue from where it was
-          await audio.play();
-          console.log('Audio playback started successfully');
-        } catch (error) {
-          console.error('Audio playback failed:', error);
-          setError(true);
+          const playPromise = audio.play();
+          
+          if (playPromise !== undefined) {
+            await playPromise;
+            console.log('Audio playback started successfully');
+          }
+        } catch (error: any) {
+          // Only log actual errors, not AbortError from rapid toggling
+          if (error.name !== 'AbortError') {
+            console.error('❌ Audio playback failed:', error.name, error.message);
+          }
+          setError(error.name !== 'AbortError');
           setIsPlaying(false);
           setIsLoading(false);
         }
       } else {
-        audio.pause();
+        // Only pause if currently playing
+        if (!audio.paused) {
+          audio.pause();
+        }
         setIsPlaying(false);
         setIsLoading(false);
       }
