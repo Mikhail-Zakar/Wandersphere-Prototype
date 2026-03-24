@@ -6,6 +6,7 @@ import { LiveThreadsPage } from './live-threads-page';
 import { MemoryGarden } from './memory-garden';
 import { SharePresencePage } from './share-presence-page';
 import { OurPromisePage } from './our-promise-page';
+import { WaitlistPage } from './waitlist-page';
 import { ExperienceViewer } from './experience-viewer';
 import { LiveThreadViewer } from './live-thread-viewer';
 import { AylaGuide } from './ayla-guide';
@@ -121,7 +122,9 @@ export function MainApp({ initialChoice }: MainAppProps) {
       )}
 
       {currentPage === 'promise' && (
-        <OurPromisePage />
+        <OurPromisePage
+          onJoinWaitlist={() => setCurrentPage('waitlist')}
+        />
       )}
 
       <AylaGuide
