@@ -34,8 +34,7 @@ export function WaitlistPage({ onBack }: WaitlistPageProps) {
 
     try {
       const formData = new FormData();
-      // ─── Replace with your key from https://web3forms.com ───
-      formData.append('access_key', 'YOUR_WEB3FORMS_ACCESS_KEY');
+      formData.append('access_key', '983544d7-a5d8-4e6e-a65e-d440158963c7');
       formData.append('name', name.trim());
       formData.append('email', email.trim());
       formData.append('message', note.trim() || '(no note left)');
