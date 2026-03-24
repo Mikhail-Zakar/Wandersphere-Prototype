@@ -4,10 +4,11 @@ import { Check, Heart, Shield, Users, Sparkles, Clock, MessageCircle } from 'luc
 import { Button } from './ui/button';
 
 interface OurPromisePageProps {
-  quietMode: boolean;
+  quietMode?: boolean;
+  onJoinWaitlist?: () => void;
 }
 
-export function OurPromisePage({ quietMode }: OurPromisePageProps) {
+export function OurPromisePage({ quietMode, onJoinWaitlist }: OurPromisePageProps) {
   const tiers = [
     {
       name: 'Garden Membership',
@@ -67,74 +68,53 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
   return (
     <div className={`min-h-screen ${quietMode ? 'pt-16 md:pt-20' : 'pt-20 md:pt-24'} pb-12 px-4 md:px-6`}>
       <div className="max-w-7xl mx-auto">
-        {/* Hero Section */}
-        {quietMode && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6 md:mb-8"
-          >
-            <p className="text-lg md:text-xl text-slate-300 font-light italic mb-2 md:mb-3">
-              "Not tourism. Not sightseeing. But presence."
-            </p>
-            <p className="text-sm md:text-base text-slate-400 max-w-2xl">
-              We help people who can't travel feel truly present in real moments around the world — through the eyes of those who live there.
-            </p>
-          </motion.div>
-        )}
 
-        {!quietMode && (
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6 }}
-            className="mb-6 md:mb-8"
-          >
-            <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-              <div className="inline-flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 shadow-lg shadow-purple-500/25">
-                <Shield className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
-              </div>
-              <h2 className="text-2xl md:text-3xl text-white">
-                Our Promise
-              </h2>
+        {/* Hero Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-6 md:mb-8"
+        >
+          <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+            <div className="inline-flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 shadow-lg shadow-purple-500/25">
+              <Shield className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
             </div>
-            <p className="text-lg md:text-xl text-slate-300 font-light italic mb-2 md:mb-3">
-              "Not tourism. Not sightseeing. But presence."
-            </p>
-            <p className="text-sm md:text-base text-slate-400 max-w-2xl">
-              We help people who can't travel feel truly present in real moments around the world — through the eyes of those who live there.
-            </p>
-          </motion.div>
-        )}
+            <h2 className="text-2xl md:text-3xl text-white">
+              Our Promise
+            </h2>
+          </div>
+          <p className="text-lg md:text-xl text-slate-300 font-light italic mb-2 md:mb-3">
+            "Not tourism. Not sightseeing. But presence."
+          </p>
+          <p className="text-sm md:text-base text-slate-400 max-w-2xl">
+            We help people who can't travel feel truly present in real moments around the world — through the eyes of those who live there.
+          </p>
+        </motion.div>
 
         {/* How It Works */}
         <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
           className="mb-8 md:mb-12"
         >
           <h3 className="text-xl md:text-2xl text-white mb-4 md:mb-6">How It Works</h3>
           <div className="grid md:grid-cols-3 gap-4 md:gap-6">
             {[
-              { title: 'For You', color: 'text-purple-300', description: 'Explore Still Moments, join Live Threads, save moments in your Garden' },
-              { title: 'For Hosts', color: 'text-pink-300', description: 'Share your world on your terms — no scripts, no performance' },
-              { title: 'For Everyone', color: 'text-blue-300', description: 'Quiet Mode, no ads, no algorithms' },
-            ].map((item, index) => (
+              { title: 'For You', color: 'text-purple-300', description: 'Explore Still Moments, join Live Threads, save moments in your Garden', delay: 0.2 },
+              { title: 'For Hosts', color: 'text-pink-300', description: 'Share your world on your terms — no scripts, no performance', delay: 0.3 },
+              { title: 'For Everyone', color: 'text-blue-300', description: 'Quiet Mode, no ads, no algorithms', delay: 0.4 },
+            ].map((item) => (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.6 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: item.delay, duration: 0.6 }}
                 className="bg-slate-900/50 border border-white/10 rounded-2xl p-4 md:p-6 hover:border-white/20 transition-all duration-300"
               >
                 <h4 className={`text-base md:text-lg ${item.color} mb-2 md:mb-3`}>{item.title}</h4>
-                <p className="text-slate-400 text-sm leading-relaxed">
-                  {item.description}
-                </p>
+                <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
               </motion.div>
             ))}
           </div>
@@ -142,10 +122,9 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
 
         {/* Ethical Pledge */}
         <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
           className="mb-8 md:mb-12"
         >
           <h3 className="text-xl md:text-2xl text-white mb-4 md:mb-6">Our Ethical Pledge</h3>
@@ -155,10 +134,9 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
               return (
                 <motion.div
                   key={pledge.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.6 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
                   className="bg-slate-900/50 border border-white/10 rounded-xl p-4 md:p-5 flex items-start gap-3 md:gap-4 hover:border-white/20 transition-all duration-300"
                 >
                   <div className="bg-purple-500/20 p-2 md:p-2.5 rounded-lg flex-shrink-0">
@@ -186,21 +164,20 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
         >
           <h3 className="text-xl md:text-2xl text-white mb-2 md:mb-3">Supporting the Ecosystem</h3>
           <p className="text-sm md:text-base text-slate-400 mb-4 md:mb-6">
-            <span className="text-purple-300 font-medium">70%</span> goes directly to hosts • 
-            <span className="ml-2">Free tier exists for basic access</span> • 
+            <span className="text-purple-300 font-medium">70%</span> goes directly to hosts •{' '}
+            <span className="ml-2">Free tier exists for basic access</span> •{' '}
             <span className="ml-2">No ads, no data selling</span>
           </p>
-          
+
           <div className="grid md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
             {tiers.map((tier, index) => {
               const Icon = tier.icon;
               return (
                 <motion.div
                   key={tier.name}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.6 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + index * 0.1, duration: 0.6 }}
                   className="bg-slate-900/50 border border-white/10 rounded-2xl p-4 md:p-6 hover:border-white/20 transition-all duration-300"
                 >
                   <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br ${tier.color} p-2 md:p-2.5 mb-3 md:mb-4 flex items-center justify-center`}>
@@ -216,10 +193,9 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.6 }}
             className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4 md:p-6"
           >
             <div className="flex items-start gap-3 md:gap-4">
@@ -239,16 +215,14 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
 
         {/* Verified Hosts */}
         <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
           className="mb-8 md:mb-12"
         >
           <h3 className="text-xl md:text-2xl text-white mb-4 md:mb-6">Verified Hosts</h3>
           <div className="bg-slate-900/50 border border-white/10 rounded-2xl p-6 md:p-8 hover:border-white/20 transition-all duration-300">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6">
-              {/* Verified Badge */}
               <div className="flex-shrink-0">
                 <div className="relative w-20 h-20 md:w-24 md:h-24">
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full opacity-20 blur-xl"></div>
@@ -263,12 +237,11 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
                 </div>
               </div>
 
-              {/* Content */}
               <div className="flex-1 text-center md:text-left">
                 <h4 className="text-lg md:text-xl text-white mb-3 md:mb-4">
                   <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                     Wandersphere Verified
-                  </span> means:
+                  </span>{' '}means:
                 </h4>
                 <ul className="space-y-2 md:space-y-3">
                   {verifiedMeans.map((item, index) => (
@@ -276,7 +249,7 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
                       key={index}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
+                      transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
                       className="flex items-start gap-2 md:gap-3"
                     >
                       <Check className="w-4 h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0 mt-0.5" />
@@ -291,10 +264,9 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
 
         {/* Call to Action */}
         <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
           className="text-center"
         >
           <div className="bg-purple-500/10 border border-purple-500/20 rounded-2xl p-6 md:p-12">
@@ -304,12 +276,14 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
             </p>
             <Button
               size="lg"
+              onClick={onJoinWaitlist}
               className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white border-0 px-6 md:px-8 py-5 md:py-6 text-base md:text-lg rounded-xl"
             >
               Join the Waitlist
             </Button>
           </div>
         </motion.section>
+
       </div>
     </div>
   );
