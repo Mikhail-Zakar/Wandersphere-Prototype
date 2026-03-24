@@ -34,7 +34,8 @@ export function WaitlistPage({ onBack }: WaitlistPageProps) {
 
     try {
       const formData = new FormData();
-      formData.append('access_key', '983544d7-a5d8-4e6e-a65e-d440158963c7');
+      // ─── Replace with your key from https://web3forms.com ───
+      formData.append('access_key', 'YOUR_WEB3FORMS_ACCESS_KEY');
       formData.append('name', name.trim());
       formData.append('email', email.trim());
       formData.append('message', note.trim() || '(no note left)');
@@ -59,48 +60,56 @@ export function WaitlistPage({ onBack }: WaitlistPageProps) {
     }
   };
 
+  const isSuccess = submitState === 'success';
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white pt-20 md:pt-24 px-4 md:px-6">
       <div className="max-w-4xl mx-auto py-12 md:py-20">
 
-        {/* Header — mirrors share-presence-page exactly */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 mb-6 md:mb-8"
-          >
-            <Mail className="w-8 h-8 md:w-10 md:h-10 text-purple-400" />
-          </motion.div>
+        {/* Header — fades out on success */}
+        <AnimatePresence>
+          {!isSuccess && (
+            <motion.div
+              key="header"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.5 }}
+              className="text-center mb-12 md:mb-16"
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 mb-6 md:mb-8"
+              >
+                <Mail className="w-8 h-8 md:w-10 md:h-10 text-purple-400" />
+              </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6 tracking-tight px-4"
-          >
-            Join the Waitlist
-          </motion.h1>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6 tracking-tight px-4"
+              >
+                Join the Waitlist
+              </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed px-4"
-          >
-            Be among the first to experience Wandersphere
-          </motion.p>
-        </motion.div>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed px-4"
+              >
+                Be among the first to experience Wandersphere
+              </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {/* Form card */}
+        {/* Form / Success card */}
         <AnimatePresence mode="wait">
-          {submitState !== 'success' ? (
+          {!isSuccess ? (
             <motion.div
               key="form"
               initial={{ opacity: 0, y: 30 }}
@@ -169,7 +178,6 @@ export function WaitlistPage({ onBack }: WaitlistPageProps) {
                 </motion.p>
               )}
 
-              {/* CTA — matches share page button style */}
               <div className="text-center">
                 <Button
                   onClick={handleSubmit}
@@ -246,7 +254,7 @@ export function WaitlistPage({ onBack }: WaitlistPageProps) {
           )}
         </AnimatePresence>
 
-        {/* Footer note — mirrors share page */}
+        {/* Footer quote */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
