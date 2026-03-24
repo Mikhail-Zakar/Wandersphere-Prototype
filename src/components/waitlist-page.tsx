@@ -28,9 +28,7 @@ export function WaitlistPage({ onBack }: WaitlistPageProps) {
 
     try {
       const formData = new FormData();
-      // ─── REPLACE the value below with your own Web3Forms access key ───
-      // Get one free at https://web3forms.com (takes 30 seconds, no sign-up needed)
-      formData.append('access_key', 'YOUR_WEB3FORMS_ACCESS_KEY');
+      formData.append('access_key', '983544d7-a5d8-4e6e-a65e-d440158963c7');
       formData.append('email', email);
       formData.append('subject', 'New Wandersphere Waitlist Signup');
       formData.append('from_name', 'Wandersphere Waitlist');
