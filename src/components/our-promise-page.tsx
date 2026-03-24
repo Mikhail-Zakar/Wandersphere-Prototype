@@ -85,8 +85,9 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
 
         {!quietMode && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6 }}
             className="mb-6 md:mb-8"
           >
@@ -109,9 +110,10 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
 
         {/* How It Works */}
         <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.6 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6 }}
           className="mb-8 md:mb-12"
         >
           <h3 className="text-xl md:text-2xl text-white mb-4 md:mb-6">How It Works</h3>
@@ -123,9 +125,10 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
             ].map((item, index) => (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 + index * 0.1, duration: 0.6 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6 }}
                 className="bg-slate-900/50 border border-white/10 rounded-2xl p-4 md:p-6 hover:border-white/20 transition-all duration-300"
               >
                 <h4 className={`text-base md:text-lg ${item.color} mb-2 md:mb-3`}>{item.title}</h4>
@@ -139,9 +142,10 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
 
         {/* Ethical Pledge */}
         <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6 }}
           className="mb-8 md:mb-12"
         >
           <h3 className="text-xl md:text-2xl text-white mb-4 md:mb-6">Our Ethical Pledge</h3>
@@ -151,9 +155,10 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
               return (
                 <motion.div
                   key={pledge.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.6 }}
                   className="bg-slate-900/50 border border-white/10 rounded-xl p-4 md:p-5 flex items-start gap-3 md:gap-4 hover:border-white/20 transition-all duration-300"
                 >
                   <div className="bg-purple-500/20 p-2 md:p-2.5 rounded-lg flex-shrink-0">
@@ -192,9 +197,10 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
               return (
                 <motion.div
                   key={tier.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 + index * 0.1, duration: 0.6 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.6 }}
                   className="bg-slate-900/50 border border-white/10 rounded-2xl p-4 md:p-6 hover:border-white/20 transition-all duration-300"
                 >
                   <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br ${tier.color} p-2 md:p-2.5 mb-3 md:mb-4 flex items-center justify-center`}>
@@ -210,9 +216,10 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
             className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4 md:p-6"
           >
             <div className="flex items-start gap-3 md:gap-4">
@@ -232,9 +239,10 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
 
         {/* Verified Hosts */}
         <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6 }}
           className="mb-8 md:mb-12"
         >
           <h3 className="text-xl md:text-2xl text-white mb-4 md:mb-6">Verified Hosts</h3>
@@ -283,9 +291,10 @@ export function OurPromisePage({ quietMode }: OurPromisePageProps) {
 
         {/* Call to Action */}
         <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6 }}
           className="text-center"
         >
           <div className="bg-purple-500/10 border border-purple-500/20 rounded-2xl p-6 md:p-12">
