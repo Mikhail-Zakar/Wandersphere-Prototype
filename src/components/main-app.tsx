@@ -16,7 +16,7 @@ interface MainAppProps {
   initialChoice: OnboardingChoice;
 }
 
-export type Page = 'explore' | 'live' | 'garden' | 'share' | 'promise';
+export type Page = 'explore' | 'live' | 'garden' | 'share' | 'promise' | 'waitlist';
 
 export function MainApp({ initialChoice }: MainAppProps) {
   const [currentPage, setCurrentPage] = useState<Page>(() => {
@@ -24,17 +24,15 @@ export function MainApp({ initialChoice }: MainAppProps) {
     if (initialChoice === 'connect') return 'live';
     return 'explore';
   });
-  
+
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
   const [selectedLiveThread, setSelectedLiveThread] = useState<LiveThread | null>(null);
   const [showAyla, setShowAyla] = useState(false);
 
-  // Scroll to top whenever page changes
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
-  // Scroll to top when opening experience or thread
   useEffect(() => {
     if (selectedExperience || selectedLiveThread) {
       window.scrollTo(0, 0);
@@ -52,25 +50,18 @@ export function MainApp({ initialChoice }: MainAppProps) {
   const handleBack = () => {
     setSelectedExperience(null);
     setSelectedLiveThread(null);
-    // Scroll to top when going back
     window.scrollTo(0, 0);
   };
 
   const handleNavigate = (page: 'explore' | 'live-threads' | 'memory-garden') => {
-    // Close current viewer
     setSelectedExperience(null);
     setSelectedLiveThread(null);
-    
-    // Navigate to the requested page
     if (page === 'explore') setCurrentPage('explore');
     else if (page === 'live-threads') setCurrentPage('live');
     else if (page === 'memory-garden') setCurrentPage('garden');
-    
-    // Scroll to top
     window.scrollTo(0, 0);
   };
 
-  // Show different content based on current state
   if (selectedExperience) {
     return (
       <ExperienceViewer
@@ -100,21 +91,15 @@ export function MainApp({ initialChoice }: MainAppProps) {
       />
 
       {currentPage === 'explore' && (
-        <ExplorePage
-          onExperienceSelect={handleExperienceSelect}
-        />
+        <ExplorePage onExperienceSelect={handleExperienceSelect} />
       )}
 
       {currentPage === 'live' && (
-        <LiveThreadsPage
-          onThreadSelect={handleLiveThreadSelect}
-        />
+        <LiveThreadsPage onThreadSelect={handleLiveThreadSelect} />
       )}
 
       {currentPage === 'garden' && (
-        <MemoryGarden 
-          onExperienceSelect={handleExperienceSelect}
-        />
+        <MemoryGarden onExperienceSelect={handleExperienceSelect} />
       )}
 
       {currentPage === 'share' && (
@@ -127,10 +112,16 @@ export function MainApp({ initialChoice }: MainAppProps) {
         />
       )}
 
+      {currentPage === 'waitlist' && (
+        <WaitlistPage
+          onBack={() => setCurrentPage('promise')}
+        />
+      )}
+
       <AylaGuide
         isOpen={showAyla}
         onClose={() => setShowAyla(false)}
-        currentPage={currentPage}
+        currentPage={currentPage === 'waitlist' ? 'promise' : currentPage}
       />
     </div>
   );
