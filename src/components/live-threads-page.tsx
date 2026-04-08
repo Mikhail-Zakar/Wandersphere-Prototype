@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { MapPin, Circle, Users, Clock, Headphones, Radio } from 'lucide-react';
 import { liveThreads, LiveThread } from '../data/mock-data';
 import { Badge } from './ui/badge';
+import TiltCard from './tilt-card';
 
 interface LiveThreadsPageProps {
   onThreadSelect: (thread: LiveThread) => void;
@@ -40,9 +41,12 @@ export function LiveThreadsPage({ onThreadSelect }: LiveThreadsPageProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.6 }}
             >
-              <button
+              {/* TiltCard — gentle tilt on horizontal cards */}
+              <TiltCard
+                className="w-full text-left overflow-hidden rounded-2xl bg-slate-900/50 border border-white/10 cursor-pointer"
                 onClick={() => onThreadSelect(thread)}
-                className="group w-full text-left overflow-hidden rounded-2xl bg-slate-900/50 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-[1.01]"
+                maxTilt={6}
+                hoverScale={1.02}
               >
                 <div className="flex flex-col md:flex-row">
                   {/* Image */}
@@ -53,7 +57,7 @@ export function LiveThreadsPage({ onThreadSelect }: LiveThreadsPageProps) {
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-slate-900/60" />
-                    
+
                     {/* Live Badge */}
                     {thread.isLive && (
                       <div className="absolute top-4 left-4">
@@ -137,7 +141,7 @@ export function LiveThreadsPage({ onThreadSelect }: LiveThreadsPageProps) {
                     </div>
                   </div>
                 </div>
-              </button>
+              </TiltCard>
             </motion.div>
           ))}
         </div>
@@ -153,8 +157,8 @@ export function LiveThreadsPage({ onThreadSelect }: LiveThreadsPageProps) {
             About Live Threads
           </h4>
           <p className="text-slate-300 text-xs md:text-sm leading-relaxed">
-            These aren't polished documentaries — they're raw, beautiful, ordinary moments that make you feel: 
-            "I'm witnessing real life, right now." After watching, you can leave a voice note, send a digital offering, 
+            These aren't polished documentaries — they're raw, beautiful, ordinary moments that make you feel:
+            "I'm witnessing real life, right now." After watching, you can leave a voice note, send a digital offering,
             or join a quiet chat room. No likes. No comments. Just human resonance.
           </p>
         </motion.div>

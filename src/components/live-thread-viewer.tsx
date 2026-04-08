@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, Mic, Send, MessageCircle, Sparkles, Gift, Info, Eye, EyeOff, Volume2, VolumeX, Menu, X, Compass, Radio, Heart } from 'lucide-react';
+import { ArrowLeft, Mic, Send, MessageCircle, Sparkles, Gift, EyeOff, Compass, Radio, Heart } from 'lucide-react';
 import { LiveThread } from '../data/mock-data';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
-import { AudioPlayer } from './audio-player';
 import { toast } from 'sonner@2.0.3';
 import { getAylaThreadInsights } from '../utils/ayla-insights';
+
+// ── New immersive components ──────────────────────────────────────────────────
+import ParallaxViewerBg    from './parallax-viewer-bg';
+import PresenceContextBar  from './presence-context-bar';
+import CollectiveHeartbeat from './collective-heartbeat';
+import BreathingGate       from './breathing-gate';
+import ImmersiveAudioPlayer from './immersive-audio-player';
+import { ambientLightShift } from '../utils/ambient-light-shift';
+import { useWeatherMood }    from '../utils/use-weather-mood';
 
 interface LiveThreadViewerProps {
   thread: LiveThread;
@@ -15,17 +23,26 @@ interface LiveThreadViewerProps {
 }
 
 export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewerProps) {
-  const [showInteractions, setShowInteractions] = useState(false);
-  const [chatMessage, setChatMessage] = useState('');
-  const [isRecording, setIsRecording] = useState(false);
-  const [audioEnabled, setAudioEnabled] = useState(true); // Start with audio ON by default for immersion
-  const [showAylaInsight, setShowAylaInsight] = useState(false);
+  const [showInteractions,    setShowInteractions   ] = useState(false);
+  const [chatMessage,         setChatMessage        ] = useState('');
+  const [isRecording,         setIsRecording        ] = useState(false);
+  const [audioEnabled,        setAudioEnabled       ] = useState(true);
+  const [showAylaInsight,     setShowAylaInsight    ] = useState(false);
   const [currentInsightIndex, setCurrentInsightIndex] = useState(0);
-  const [showNavMenu, setShowNavMenu] = useState(false);
+  const [showNavMenu,         setShowNavMenu        ] = useState(false);
 
-  const handleSendOffering = () => {
-    toast.success('✨ Virtual candle lit and sent to ' + thread.host.name);
-  };
+  const aylaInsights = getAylaThreadInsights(thread);
+
+  // ── Atmospheric colour — threads don't have timeOfDay, use a night default ──
+  const ambientLight = ambientLightShift(undefined);
+
+  // ── Live weather at thread location ──────────────────────────────────────
+  const weatherMood = useWeatherMood(
+    (thread as any).lat,
+    (thread as any).lng
+  );
+
+  const handleSendOffering = () => toast.success('✨ Virtual candle lit and sent to ' + thread.host.name);
 
   const handleVoiceNote = () => {
     if (isRecording) {
@@ -44,11 +61,8 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
     }
   };
 
-  const aylaInsights = getAylaThreadInsights(thread);
-
   const handleAylaClick = () => {
     if (showAylaInsight) {
-      // Cycle to next insight
       setCurrentInsightIndex((prev) => (prev + 1) % aylaInsights.length);
     } else {
       setShowAylaInsight(true);
@@ -57,7 +71,11 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      {/* Floating Quiet Mode Icon - No functionality */}
+
+      {/* ── Breathing gate — once per session ── */}
+      <BreathingGate onComplete={() => {}} />
+
+      {/* ── Quiet Mode icon ── */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -67,33 +85,24 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
         <EyeOff className="w-4 h-4 md:w-5 md:h-5" />
       </motion.div>
 
-      {/* Live Video Background */}
-      <div className="absolute inset-0">
-        <img
-          src={thread.imageUrl}
-          alt={thread.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80" />
-      </div>
+      {/* ── Parallax background ── */}
+      <ParallaxViewerBg
+        imageUrl={thread.imageUrl}
+        className="absolute inset-0 w-full h-full"
+        ambientColor={ambientLight.fogColor}
+        ambientIntensity={ambientLight.intensity * 0.7}
+        weatherColor={weatherMood?.fogColor}
+        weatherIntensity={weatherMood?.intensity}
+      />
 
-      {/* Hidden Audio Player - Single instance only */}
-      {thread.audioUrl && (
-        <AudioPlayer
-          audioUrl={thread.audioUrl}
-          isEnabled={audioEnabled}
-          onToggle={() => setAudioEnabled(!audioEnabled)}
-          showControl={false}
-        />
-      )}
-
-      {/* Content */}
+      {/* ── Content ── */}
       <div className="relative z-10 min-h-screen flex flex-col">
-        {/* Top Bar - Always show Back button, even in Quiet Mode */}
+
+        {/* Top Bar */}
         <motion.div
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="p-4 md:p-6 pr-16 md:pr-20 flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent"
+          className="p-4 md:p-6 pr-16 md:pr-20 flex items-center justify-between bg-gradient-to-b from-black/70 to-transparent"
         >
           <Button
             onClick={onBack}
@@ -104,29 +113,6 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
             <ArrowLeft className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
             Back
           </Button>
-
-          {/* Controls */}
-          <div className="flex items-center gap-2">
-            {thread.audioUrl && (
-              <button
-                onClick={() => setAudioEnabled(!audioEnabled)}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-black/40 backdrop-blur-sm border border-white/20 hover:bg-black/60 transition-colors"
-                title={audioEnabled ? "Mute ambient sound" : "Play ambient sound"}
-              >
-                {audioEnabled ? (
-                  <>
-                    <Volume2 className="w-4 h-4 text-green-400" />
-                    <span className="text-xs text-slate-300 font-medium">Audio On</span>
-                  </>
-                ) : (
-                  <>
-                    <VolumeX className="w-4 h-4 text-slate-400" />
-                    <span className="text-xs text-slate-400">Audio Off</span>
-                  </>
-                )}
-              </button>
-            )}
-          </div>
         </motion.div>
 
         {/* Navigation Menu */}
@@ -139,42 +125,26 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
               className="absolute top-16 md:top-20 left-4 md:left-6 z-50 bg-slate-900/95 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl overflow-hidden"
             >
               <div className="p-2 space-y-1 min-w-[180px]">
-                <button
-                  onClick={() => {
-                    onNavigate('explore');
-                    setShowNavMenu(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <Compass className="w-4 h-4" />
-                  <span>Explore</span>
-                </button>
-                <button
-                  onClick={() => {
-                    onNavigate('live-threads');
-                    setShowNavMenu(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <Radio className="w-4 h-4" />
-                  <span>Live Threads</span>
-                </button>
-                <button
-                  onClick={() => {
-                    onNavigate('memory-garden');
-                    setShowNavMenu(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <Heart className="w-4 h-4" />
-                  <span>Memory Garden</span>
-                </button>
+                {[
+                  { page: 'explore' as const,       label: 'Explore',       Icon: Compass },
+                  { page: 'live-threads' as const,  label: 'Live Threads',  Icon: Radio   },
+                  { page: 'memory-garden' as const, label: 'Memory Garden', Icon: Heart   },
+                ].map(({ page, label, Icon }) => (
+                  <button
+                    key={page}
+                    onClick={() => { onNavigate(page); setShowNavMenu(false); }}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-white/10 rounded-lg transition-colors"
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span>{label}</span>
+                  </button>
+                ))}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Center Content - Simulated Live Video */}
+        {/* Centre — "Not streaming" card for offline threads */}
         <div className="flex-1 flex items-center justify-center">
           {!thread.isLive && (
             <motion.div
@@ -183,35 +153,67 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
               className="text-center p-8 bg-black/60 backdrop-blur-md rounded-2xl border border-white/20 max-w-md"
             >
               <Sparkles className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-              <h3 className="text-2xl mb-3">
-                Not streaming right now
-              </h3>
+              <h3 className="text-2xl mb-3">Not streaming right now</h3>
               <p className="text-slate-300 mb-2">
                 {thread.host.name} streams from {thread.host.location}
               </p>
-              <p className="text-slate-400 text-sm">
-                {thread.scheduledTime}
-              </p>
-              <p className="text-slate-500 text-sm mt-4 italic">
-                "Come back then!"
-              </p>
+              <p className="text-slate-400 text-sm">{thread.scheduledTime}</p>
+              <p className="text-slate-500 text-sm mt-4 italic">"Come back then!"</p>
             </motion.div>
           )}
         </div>
 
-        {/* Bottom Info and Interactions */}
+        {/* Bottom Info & Interactions */}
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="p-6 bg-gradient-to-t from-black/90 to-transparent"
+          className="p-4 md:p-6 bg-gradient-to-t from-black/90 to-transparent"
         >
           <div className="max-w-4xl mx-auto">
+
+            {/* ── Immersive audio player + waveform ── */}
+            {thread.audioUrl && (
+              <div className="mb-5">
+                <ImmersiveAudioPlayer
+                  audioUrl={thread.audioUrl}
+                  isEnabled={audioEnabled}
+                  onToggle={() => setAudioEnabled(!audioEnabled)}
+                  barHeight={30}
+                  barCount={52}
+                />
+              </div>
+            )}
+
             {/* Thread Info */}
-            <div className="mb-6">
-              <h1 className="text-3xl mb-2">{thread.title}</h1>
-              <p className="text-slate-300 italic mb-4">
-                "{thread.description}"
-              </p>
+            <div className="mb-5">
+              <h1 className="text-2xl md:text-3xl mb-2">{thread.title}</h1>
+              <p className="text-slate-300 italic mb-3">"{thread.description}"</p>
+
+              {/* ── Live local time + distance ── */}
+              {(thread as any).timezone && (
+                <PresenceContextBar
+                  timezone={(thread as any).timezone}
+                  lat={(thread as any).lat ?? 0}
+                  lng={(thread as any).lng ?? 0}
+                  location={thread.host.location}
+                  className="mb-3"
+                />
+              )}
+
+              {/* Weather context */}
+              {weatherMood && (
+                <p className="text-xs text-slate-500 mb-3">
+                  Currently {weatherMood.condition.toLowerCase()} · {weatherMood.temperature}°C in {thread.host.location}
+                </p>
+              )}
+
+              {/* ── Collective heartbeat ── */}
+              {thread.isLive && (
+                <CollectiveHeartbeat
+                  baseCount={thread.viewers ?? 42}
+                  className="mb-4"
+                />
+              )}
 
               {/* Host */}
               <div className="flex items-start gap-3 p-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10">
@@ -220,11 +222,9 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
                 </div>
                 <div className="flex-1">
                   <div className="text-white text-sm mb-1">
-                    {thread.host.name} • {thread.host.location}, {thread.host.country}
+                    {thread.host.name} · {thread.host.location}, {thread.host.country}
                   </div>
-                  <p className="text-slate-400 text-xs leading-relaxed">
-                    {thread.host.bio}
-                  </p>
+                  <p className="text-slate-400 text-xs leading-relaxed">{thread.host.bio}</p>
                 </div>
               </div>
             </div>
@@ -242,10 +242,9 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
 
                 <Button
                   onClick={handleVoiceNote}
-                  className={`${
-                    isRecording 
-                      ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
-                      : 'bg-white/10 hover:bg-white/20'
+                  className={`${isRecording
+                    ? 'bg-red-500 hover:bg-red-600 animate-pulse'
+                    : 'bg-white/10 hover:bg-white/20'
                   } text-white border border-white/20`}
                 >
                   <Mic className="w-4 h-4 mr-2" />
@@ -262,15 +261,11 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
               </div>
             )}
 
-            {/* Ayla Insight Section */}
+            {/* Ayla Insight */}
             <div className="text-center mb-4">
               <AnimatePresence>
                 {!showAylaInsight ? (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                     <Button
                       onClick={() => setShowAylaInsight(true)}
                       variant="ghost"
@@ -296,9 +291,7 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
                       <p className="text-slate-200 text-sm leading-relaxed">
                         {aylaInsights[currentInsightIndex]}
                       </p>
-                      <p className="text-purple-400 text-xs mt-2 italic">
-                        Tap for another insight
-                      </p>
+                      <p className="text-purple-400 text-xs mt-2 italic">Tap for another insight</p>
                     </motion.div>
                     <Button
                       onClick={() => setShowAylaInsight(false)}
@@ -313,7 +306,7 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
               </AnimatePresence>
             </div>
 
-            {/* Interaction Panel */}
+            {/* Quiet Chat Panel */}
             <AnimatePresence>
               {showInteractions && thread.isLive && (
                 <motion.div
@@ -324,9 +317,7 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
                 >
                   <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 space-y-4">
                     <div>
-                      <h4 className="text-sm text-slate-400 mb-3">
-                        Quiet Chat — Text only, no emojis
-                      </h4>
+                      <h4 className="text-sm text-slate-400 mb-3">Quiet Chat — Text only, no emojis</h4>
                       <div className="flex gap-2">
                         <Textarea
                           value={chatMessage}
@@ -345,11 +336,10 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
                         </Button>
                       </div>
                     </div>
-
                     <div className="text-xs text-slate-500 space-y-1">
-                      <p>• Voice notes go directly to {thread.host.name}</p>
-                      <p>• Digital offerings appear as gentle notifications</p>
-                      <p>• Chat messages are visible to other viewers</p>
+                      <p>· Voice notes go directly to {thread.host.name}</p>
+                      <p>· Digital offerings appear as gentle notifications</p>
+                      <p>· Chat messages are visible to other viewers</p>
                       <p className="italic">No likes. No comments. Just human resonance.</p>
                     </div>
                   </div>
@@ -360,7 +350,7 @@ export function LiveThreadViewer({ thread, onBack, onNavigate }: LiveThreadViewe
         </motion.div>
       </div>
 
-      {/* Viewer Count - Adjusted position to not overlap with Quiet Mode toggle */}
+      {/* Viewer count badge */}
       {thread.isLive && thread.viewers && (
         <motion.div
           initial={{ opacity: 0 }}

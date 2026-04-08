@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { MapPin, Clock, Headphones, Circle, Compass } from 'lucide-react';
 import { experiences, Experience } from '../data/mock-data';
 import { Badge } from './ui/badge';
+import TiltCard from './tilt-card';
 
 interface ExplorePageProps {
   onExperienceSelect: (experience: Experience) => void;
@@ -39,9 +40,9 @@ export function ExplorePage({ onExperienceSelect }: ExplorePageProps) {
           {/* Filters */}
           <div className="flex flex-wrap gap-2 mt-4 md:mt-6">
             {[
-              { id: 'all', label: 'All Experiences' },
-              { id: '360', label: '360° Views' },
-              { id: 'live', label: 'Live Moments' },
+              { id: 'all',   label: 'All Experiences' },
+              { id: '360',   label: '360° Views' },
+              { id: 'live',  label: 'Live Moments' },
               { id: 'still', label: 'Still Moments' },
             ].map((item) => (
               <button
@@ -66,13 +67,16 @@ export function ExplorePage({ onExperienceSelect }: ExplorePageProps) {
           {filteredExperiences.map((experience, index) => (
             <motion.div
               key={experience.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
+              transition={{ delay: index * 0.08, duration: 0.55 }}
             >
-              <button
+              {/* TiltCard provides the 3-D perspective hover — no extra scale needed */}
+              <TiltCard
+                className="w-full text-left overflow-hidden rounded-2xl bg-slate-900/50 border border-white/10 cursor-pointer"
                 onClick={() => onExperienceSelect(experience)}
-                className="group w-full text-left overflow-hidden rounded-2xl bg-slate-900/50 border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-[1.02]"
+                hoverScale={1.03}
+                maxTilt={10}
               >
                 {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden">
@@ -82,7 +86,7 @@ export function ExplorePage({ onExperienceSelect }: ExplorePageProps) {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
-                  
+
                   {/* Type Badge */}
                   <div className="absolute top-4 right-4">
                     <Badge className="bg-white/10 backdrop-blur-md text-white border-white/20">
@@ -153,7 +157,7 @@ export function ExplorePage({ onExperienceSelect }: ExplorePageProps) {
                     ))}
                   </div>
                 </div>
-              </button>
+              </TiltCard>
             </motion.div>
           ))}
         </div>
