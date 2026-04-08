@@ -14,6 +14,9 @@ export interface Experience {
   soundscape?: string;
   timeOfDay?: string;
   audioUrl?: string;
+  timezone?: string;    
+  lat?: number;         
+  lng?: number;         
 }
 
 export interface LiveThread {
@@ -32,6 +35,9 @@ export interface LiveThread {
   viewers?: number;
   tags: string[];
   audioUrl?: string;
+  timezone?: string;    
+  lat?: number;         
+  lng?: number; 
 }
 
 export const experiences: Experience[] = [
@@ -51,6 +57,9 @@ export const experiences: Experience[] = [
     soundscape: 'Temple bells, distant chanting, morning birds',
     timeOfDay: '5:30 AM',
     audioUrl: 'https://raw.githubusercontent.com/Mikhail-Zakar/Wandersphere-Prototype-Audios/main/Morning%20Prayer%20at%20Ancient%20Temple.mp3',
+    timezone: "Asia/Colombo",
+    lat: 7.2906,
+    lng: 80.6337,
   },
   {
     id: 'portugal-fishing',
@@ -68,6 +77,9 @@ export const experiences: Experience[] = [
     soundscape: 'Waves, seagulls, rope against wood',
     timeOfDay: '6:00 AM',
     audioUrl: 'https://raw.githubusercontent.com/Mikhail-Zakar/Wandersphere-Prototype-Audios/main/Fisherman%20Mending%20Nets%20at%20Dawn.mp3',
+    timezone: "Europe/Lisbon",
+    lat: 39.6009,
+    lng: -9.0710,
   },
   {
     id: 'kyoto-origami',
@@ -85,6 +97,9 @@ export const experiences: Experience[] = [
     soundscape: 'Soft humming, paper rustling, distant wind chimes',
     timeOfDay: '2:00 PM',
     audioUrl: 'https://raw.githubusercontent.com/Mikhail-Zakar/Wandersphere-Prototype-Audios/main/Grandmother%20Folding%20Origami.mp3',
+    timezone: "Asia/Tokyo",
+    lat: 35.0116,
+    lng: 135.7681,
   },
   {
     id: 'mexico-musician',
@@ -102,6 +117,9 @@ export const experiences: Experience[] = [
     soundscape: 'Guitar strings, rain on pavement, distant traffic',
     timeOfDay: '7:00 PM',
     audioUrl: 'https://raw.githubusercontent.com/Mikhail-Zakar/Wandersphere-Prototype-Audios/main/Street%20Musician%20in%20the%20Rain.mp3',
+    timezone: "America/Mexico_City",
+    lat: 19.4326,
+    lng: -99.1332,  
   },
   {
     id: 'mexico-party',
@@ -119,6 +137,9 @@ export const experiences: Experience[] = [
     soundscape: 'Mariachi music, laughter, clinking glasses, fireworks',
     timeOfDay: '11:00 PM',
     audioUrl: 'https://raw.githubusercontent.com/Mikhail-Zakar/Wandersphere-Prototype-Audios/main/Late%20Night%20Mexican%20Neighbourhood%20Party.mp3',
+    timezone: "America/Mexico_City",
+    lat: 20.6597,
+    lng: -103.3496,  
   },
 ];
 
@@ -138,6 +159,9 @@ export const liveThreads: LiveThread[] = [
     description: 'Watch Maria arrange fresh flowers as fishermen return with their catch. The air smells of roses and the sea.',
     tags: ['Dawn', 'Market', 'Ocean'],
     audioUrl: 'https://raw.githubusercontent.com/Mikhail-Zakar/Wandersphere-Prototype-Audios/main/Dawn%20at%20the%20Docks.mp3',
+    timezone: "America/New_York",
+    lat: 38.3365,
+    lng: -75.0849,  
   },
   {
     id: 'thread-kyoto-temple',
@@ -154,6 +178,9 @@ export const liveThreads: LiveThread[] = [
     description: 'Shh… listen. That\'s the sound of temple bells at sunrise. Feel the vibration in your chest.',
     tags: ['Spiritual', 'Morning', 'Peaceful'],
     audioUrl: 'https://raw.githubusercontent.com/Mikhail-Zakar/Wandersphere-Prototype-Audios/main/Temple%20Bells%20at%20Sunrise.mp3',
+    timezone: "Asia/Bangkok",
+    lat: 18.7883,
+    lng: 98.9853,  
   },
   {
     id: 'thread-mexico-market',
@@ -170,5 +197,8 @@ export const liveThreads: LiveThread[] = [
     description: 'Join Rosa as she sets up her stall. The colors are vibrant. The sounds are alive.',
     tags: ['Culture', 'Market', 'Tradition'],
     audioUrl: 'https://raw.githubusercontent.com/Mikhail-Zakar/Wandersphere-Prototype-Audios/main/Market%20Day%20Colors.mp3',
+    timezone: "Europe/Paris",
+    lat: 43.9493,
+    lng: 5.2049,  
   },
 ];
